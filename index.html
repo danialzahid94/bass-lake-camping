@@ -281,43 +281,109 @@
         /* Timeline */
         .timeline {
             position: relative;
-            padding: 2rem 0;
+            padding: 1rem 0;
         }
 
         .timeline-day {
             margin-bottom: 3rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .timeline-day-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .timeline-day-header.friday {
+            background: linear-gradient(135deg, #3d6b22, #5a8f35);
+        }
+
+        .timeline-day-header.saturday {
+            background: linear-gradient(135deg, #b85c00, #e07a1a);
+        }
+
+        .timeline-day-header.sunday {
+            background: linear-gradient(135deg, #2a5298, #4a7abf);
+        }
+
+        .timeline-day-icon {
+            font-size: 2.5rem;
+            line-height: 1;
         }
 
         .timeline-day-title {
-            font-size: 1.5rem;
-            color: var(--green-dark);
+            font-size: 1.4rem;
+            color: white;
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--orange-light);
+            margin: 0;
+        }
+
+        .timeline-day-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.82);
+            margin-top: 0.2rem;
+            font-style: italic;
+        }
+
+        .timeline-items {
+            background: #fdfaf4;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
 
         .timeline-item {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
+            gap: 1rem;
+            padding: 0.9rem 1.1rem;
             background-color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             border-left: 4px solid var(--green-light);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            align-items: flex-start;
+        }
+
+        .timeline-item.travel  { border-left-color: #7aab3f; }
+        .timeline-item.meal    { border-left-color: #e07a1a; }
+        .timeline-item.activity{ border-left-color: #4a9abf; }
+        .timeline-item.fire    { border-left-color: #d44f0a; }
+        .timeline-item.sleep   { border-left-color: #7a6a9a; }
+        .timeline-item.admin   { border-left-color: #9aaa5a; }
+
+        .timeline-item.highlight {
+            background: linear-gradient(135deg, #fff8ed, #fff0d0);
+            border-left-color: #e05a00;
+            box-shadow: 0 2px 8px rgba(200,100,0,0.13);
         }
 
         .timeline-time {
-            min-width: 80px;
+            min-width: 72px;
             font-weight: 700;
             color: var(--orange-dark);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
+            padding-top: 0.1rem;
+            flex-shrink: 0;
+        }
+
+        .timeline-emoji {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            padding-top: 0.05rem;
         }
 
         .timeline-content {
             flex: 1;
             color: var(--text-light);
+            font-size: 0.97rem;
+        }
+
+        .timeline-content strong {
+            color: var(--text-dark);
         }
 
         /* Meal Plan */
@@ -723,11 +789,20 @@
             }
 
             .timeline-item {
-                flex-direction: column;
+                flex-direction: row;
+            }
+
+            .timeline-day-header {
+                padding: 1.2rem 1.2rem;
+            }
+
+            .timeline-items {
+                padding: 1rem;
             }
 
             .timeline-time {
-                margin-bottom: 0.5rem;
+                min-width: 60px;
+                font-size: 0.8rem;
             }
 
             .comment-input-group {
@@ -876,106 +951,138 @@
 
     <!-- Trip Timeline -->
     <section id="timeline">
-        <h2>🕐 Trip Timeline</h2>
+        <h2>🗓️ Trip Timeline</h2>
         <div class="timeline">
-            <div class="timeline-day">
-                <div class="timeline-day-title">Friday, May 15 — Travel & Pack Day</div>
 
-                <div class="timeline-item">
-                    <div class="timeline-time">Morning</div>
-                    <div class="timeline-content"><strong>Ottawa Group Departs</strong> — Saif, Sania, Eshal, Iman & Alina drive from Ottawa to Milton (~4.5 hrs).</div>
+            <!-- FRIDAY -->
+            <div class="timeline-day">
+                <div class="timeline-day-header friday">
+                    <div class="timeline-day-icon">🚗</div>
+                    <div>
+                        <div class="timeline-day-title">Friday, May 15</div>
+                        <div class="timeline-day-subtitle">Ottawa crew rolls in — the adventure begins tonight</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">Afternoon</div>
-                    <div class="timeline-content"><strong>Ottawa Group Arrives in Milton</strong> — Settle in, rest up.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">Evening</div>
-                    <div class="timeline-content"><strong>Pack Everything</strong> — Gear check, load coolers, organize food. Get everything ready for an early Saturday departure.</div>
+                <div class="timeline-items">
+                    <div class="timeline-item travel">
+                        <div class="timeline-time">Evening</div>
+                        <div class="timeline-emoji">🛣️</div>
+                        <div class="timeline-content"><strong>Ottawa Group Arrives in Milton</strong> — Saif, Sania, Eshal, Iman & Alina make the drive down. The whole crew is finally together.</div>
+                    </div>
+                    <div class="timeline-item admin">
+                        <div class="timeline-time">Night</div>
+                        <div class="timeline-emoji">🎒</div>
+                        <div class="timeline-content"><strong>Pack Cars & Get Ready</strong> — Load the coolers, stack the gear, run the checklist. Everything goes in the car tonight so Saturday morning is smooth.</div>
+                    </div>
                 </div>
             </div>
 
+            <!-- SATURDAY -->
             <div class="timeline-day">
-                <div class="timeline-day-title">Saturday, May 16 — Camping Day</div>
-
-                <div class="timeline-item">
-                    <div class="timeline-time">7:30 AM</div>
-                    <div class="timeline-content"><strong>Breakfast in Milton</strong> — Fuel up before the drive.</div>
+                <div class="timeline-day-header saturday">
+                    <div class="timeline-day-icon">⛺</div>
+                    <div>
+                        <div class="timeline-day-title">Saturday, May 16</div>
+                        <div class="timeline-day-subtitle">The main event — Bass Lake awaits</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">8:30 AM</div>
-                    <div class="timeline-content"><strong>Load Up & Depart</strong> — Final gear check, load cars, hit the road.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">10:00 AM</div>
-                    <div class="timeline-content"><strong>Supplies Run en Route</strong> — Pick up ice, firewood, any last groceries.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">11:00 AM</div>
-                    <div class="timeline-content"><strong>Arrive at Bass Lake</strong> — No gatehouse check-in needed. Head straight to campsites 132 & 133.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">11:15 AM</div>
-                    <div class="timeline-content"><strong>TENTS GO UP FIRST</strong> — Unload and set up tents before anything else.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">12:00 PM</div>
-                    <div class="timeline-content"><strong>Lunch at Camp</strong> — Wraps, sandwiches, snacks. Finish setup.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">1:00 PM</div>
-                    <div class="timeline-content"><strong>Explore & Relax</strong> — Hike, beach, swimming, settle in.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">6:00 PM</div>
-                    <div class="timeline-content"><strong>Dinner Prep</strong> — BBQ burgers & hot dogs, side dishes. Start fire.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">7:00 PM</div>
-                    <div class="timeline-content"><strong>Dinner</strong> — Eat together, enjoy the outdoors.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">8:30 PM</div>
-                    <div class="timeline-content"><strong>Campfire</strong> — S'mores, hot chocolate, chai, stories.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">10:00 PM</div>
-                    <div class="timeline-content"><strong>Quiet Time</strong> — Keep voices low. Enjoy the stars.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">11:00 PM</div>
-                    <div class="timeline-content"><strong>Sleep</strong> — Extinguish fire. Store food in cars. Head to tents.</div>
+                <div class="timeline-items">
+                    <div class="timeline-item sleep">
+                        <div class="timeline-time">8:00 AM</div>
+                        <div class="timeline-emoji">⏰</div>
+                        <div class="timeline-content"><strong>Wake Up Call</strong> — Rise and shine, campers. Today's the day.</div>
+                    </div>
+                    <div class="timeline-item meal">
+                        <div class="timeline-time">8:30 AM</div>
+                        <div class="timeline-emoji">🍳</div>
+                        <div class="timeline-content"><strong>Breakfast</strong> — Fuel up in Milton before the drive.</div>
+                    </div>
+                    <div class="timeline-item admin">
+                        <div class="timeline-time">9:00 AM</div>
+                        <div class="timeline-emoji">✅</div>
+                        <div class="timeline-content"><strong>Final Items Check</strong> — Last look around, load up the cars. Nothing gets left behind.</div>
+                    </div>
+                    <div class="timeline-item travel">
+                        <div class="timeline-time">9:30 AM</div>
+                        <div class="timeline-emoji">🚙</div>
+                        <div class="timeline-content"><strong>Hit the Road!</strong> — ~1.5 hrs to Bass Lake via Hwy 400. Windows down, good music on.</div>
+                    </div>
+                    <div class="timeline-item travel highlight">
+                        <div class="timeline-time">11:30 AM</div>
+                        <div class="timeline-emoji">🌲</div>
+                        <div class="timeline-content"><strong>We're Here!</strong> — Show the barcode from the confirmation email at the gate, grab your car pass, and head straight to campsites 132 & 133. If the previous campers are still around, hit the lake until they clear out.</div>
+                    </div>
+                    <div class="timeline-item admin">
+                        <div class="timeline-time">12:00 PM</div>
+                        <div class="timeline-emoji">🏕️</div>
+                        <div class="timeline-content"><strong>Set Up Camp</strong> — Tents first, always. Then chairs, tarp, cooking station. Make it home.</div>
+                    </div>
+                    <div class="timeline-item meal">
+                        <div class="timeline-time">2:00 PM</div>
+                        <div class="timeline-emoji">🥙</div>
+                        <div class="timeline-content"><strong>Lunch + Light the Fire</strong> — Eat, relax, get the campfire going. The vibe starts here.</div>
+                    </div>
+                    <div class="timeline-item activity highlight">
+                        <div class="timeline-time">2:00–6:00 PM</div>
+                        <div class="timeline-emoji">🏊</div>
+                        <div class="timeline-content"><strong>Open Choice — Your Afternoon to Own</strong> — Swimming at the lake, hiking the trails, hammocking at camp, board games, napping in the sun. Do what you want.</div>
+                    </div>
+                    <div class="timeline-item meal">
+                        <div class="timeline-time">6:30 PM</div>
+                        <div class="timeline-emoji">🍖</div>
+                        <div class="timeline-content"><strong>Dinner Time</strong> — BBQ's fired up. Burgers, hot dogs, sides — eat together under the trees.</div>
+                    </div>
+                    <div class="timeline-item fire highlight">
+                        <div class="timeline-time">8:30 PM</div>
+                        <div class="timeline-emoji">🔥</div>
+                        <div class="timeline-content"><strong>Bonfire + Karaoke Night</strong> — Popcorn and marshmallows on the fire, and yes — karaoke under the stars. This is the one.</div>
+                    </div>
+                    <div class="timeline-item sleep">
+                        <div class="timeline-time">11:00 PM</div>
+                        <div class="timeline-emoji">🌙</div>
+                        <div class="timeline-content"><strong>Wind Down</strong> — Put out the fire, secure the food in the cars, and head to your tents. Big day deserves good sleep.</div>
+                    </div>
                 </div>
             </div>
 
+            <!-- SUNDAY -->
             <div class="timeline-day">
-                <div class="timeline-day-title">Sunday, May 17 — Last Morning</div>
-
-                <div class="timeline-item">
-                    <div class="timeline-time">7:30 AM</div>
-                    <div class="timeline-content"><strong>Early Risers</strong> — Coffee & tea for the early birds.</div>
+                <div class="timeline-day-header sunday">
+                    <div class="timeline-day-icon">🌅</div>
+                    <div>
+                        <div class="timeline-day-title">Sunday, May 17</div>
+                        <div class="timeline-day-subtitle">One last morning in the wild — make it count</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">8:30 AM</div>
-                    <div class="timeline-content"><strong>Breakfast</strong> — Eggs, bacon, sausage, toast, naan, fruit.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">9:30 AM</div>
-                    <div class="timeline-content"><strong>Last Explore</strong> — Hike, beach, or just soak it in.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">12:00 PM</div>
-                    <div class="timeline-content"><strong>Lunch</strong> — Use up remaining food. Wraps, snacks.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">1:00 PM</div>
-                    <div class="timeline-content"><strong>Pack Up</strong> — Break down tents, clean campsites.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-time">2:00 PM</div>
-                    <div class="timeline-content"><strong>Check-Out & Depart</strong> — Leave no trace! Drive back to Milton.</div>
+                <div class="timeline-items">
+                    <div class="timeline-item sleep">
+                        <div class="timeline-time">8:00 AM</div>
+                        <div class="timeline-emoji">☀️</div>
+                        <div class="timeline-content"><strong>Wake Up Call</strong> — Morning in the woods hits different. Coffee, fresh air, take it slow.</div>
+                    </div>
+                    <div class="timeline-item meal">
+                        <div class="timeline-time">8:30 AM</div>
+                        <div class="timeline-emoji">🍳</div>
+                        <div class="timeline-content"><strong>Breakfast</strong> — Last meal at camp. Enjoy it.</div>
+                    </div>
+                    <div class="timeline-item activity highlight">
+                        <div class="timeline-time">9:00–1:00 PM</div>
+                        <div class="timeline-emoji">🥾</div>
+                        <div class="timeline-content"><strong>Open Activities</strong> — Hike, hit the beach one more time, or just sit by the water and soak it all in. No rush.</div>
+                    </div>
+                    <div class="timeline-item admin">
+                        <div class="timeline-time">1:00 PM</div>
+                        <div class="timeline-emoji">🧹</div>
+                        <div class="timeline-content"><strong>Pack Up & Clean Up</strong> — Break down tents, clean both campsites. Leave it better than we found it.</div>
+                    </div>
+                    <div class="timeline-item travel">
+                        <div class="timeline-time">2:00 PM</div>
+                        <div class="timeline-emoji">👋</div>
+                        <div class="timeline-content"><strong>Depart</strong> — Check out and hit the road. Until next time, Bass Lake.</div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
