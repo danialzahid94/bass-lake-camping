@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bass Lake Camping Trip 2026</title>
+
+    <!-- Firebase SDK (v9+ compat mode) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green-dark: #2D5016;
+            --green-light: #4A7C28;
+            --brown-dark: #5C4033;
+            --brown-light: #8B6914;
+            --orange-dark: #D46B08;
+            --orange-light: #E8820C;
+            --cream-light: #FDF6E3;
+            --cream-dark: #FAF0DC;
+            --text-dark: #2D2D2D;
+            --text-light: #5A5A5A;
+            --border-color: #D4A574;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--cream-light);
+        }
+
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: var(--cream-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            color: var(--cream-light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .name-picker-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .name-picker-label {
+            color: var(--cream-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        #namePicker {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--cream-light);
+            color: var(--green-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #namePicker:hover {
+            background-color: var(--orange-light);
+            color: white;
+        }
+
+        #namePicker:focus {
+            outline: 2px solid var(--orange-light);
+            outline-offset: 2px;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--cream-dark);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--green-dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--orange-light);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: var(--brown-dark);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Hero Section */
+        #hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
+            color: var(--cream-light);
+        }
+
+        #hero h1 {
+            color: var(--cream-light);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #hero .emoji {
+            font-size: 3rem;
+            display: block;
+            margin: 1rem 0;
+        }
+
+        #hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        #hero .tagline {
+            font-size: 1.1rem;
+            font-style: italic;
+            opacity: 0.85;
+            margin-top: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background-color: white;
+            border-left: 4px solid var(--orange-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--brown-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-box {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--green-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-box h4 {
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-box p {
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Reminders */
+        .reminder-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .reminder {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--orange-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .reminder-title {
+            font-weight: 700;
+            color: var(--orange-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .reminder-content {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-day {
+            margin-bottom: 3rem;
+        }
+
+        .timeline-day-title {
+            font-size: 1.5rem;
+            color: var(--green-dark);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--orange-light);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--green-light);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .timeline-time {
+            min-width: 80px;
+            font-weight: 700;
+            color: var(--orange-dark);
+            font-size: 0.95rem;
+        }
+
+        .timeline-content {
+            flex: 1;
+            color: var(--text-light);
+        }
+
+        /* Meal Plan */
+        .meal-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .meal-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid var(--orange-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .meal-time {
+            font-weight: 700;
+            color: var(--brown-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .meal-items {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .meal-items li {
+            margin-left: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Role Assignments */
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .role-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--green-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .role-name {
+            font-weight: 700;
+            color: var(--green-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .role-claimed-by {
+            background-color: var(--green-light);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .claim-button {
+            background-color: var(--orange-light);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .claim-button:hover {
+            background-color: var(--orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(212, 107, 8, 0.3);
+        }
+
+        .claim-button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Checklist */
+        .checklist-groups {
+            margin-top: 2rem;
+        }
+
+        .checklist-group {
+            margin-bottom: 2rem;
+        }
+
+        .checklist-group-title {
+            font-weight: 700;
+            color: var(--green-dark);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--green-light);
+        }
+
+        .checklist-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item.checked {
+            background-color: #E8F5E9;
+            border-color: var(--green-light);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 0.2rem;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--green-light);
+        }
+
+        .checklist-item-content {
+            flex: 1;
+        }
+
+        .checklist-item-label {
+            display: block;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+            cursor: pointer;
+        }
+
+        .checklist-item.checked .checklist-item-label {
+            text-decoration: line-through;
+            color: var(--text-light);
+        }
+
+        .checklist-item-info {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        /* Accordion */
+        .accordion-item {
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .accordion-header {
+            padding: 1rem;
+            background-color: var(--cream-dark);
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--green-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: var(--brown-light);
+            color: white;
+        }
+
+        .accordion-header.active {
+            background-color: var(--green-light);
+            color: white;
+        }
+
+        .accordion-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1rem;
+        }
+
+        .accordion-content.active {
+            max-height: 500px;
+            padding: 1rem;
+        }
+
+        .accordion-content p {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .accordion-content ol, .accordion-content ul {
+            margin-left: 1.5rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .accordion-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Comments Section */
+        .comments-container {
+            max-width: 600px;
+            margin-top: 2rem;
+        }
+
+        .comment-input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .comment-input-group input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .comment-input-group button {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--orange-light);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .comment-input-group button:hover {
+            background-color: var(--orange-dark);
+            transform: translateY(-2px);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--green-light);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-name {
+            font-weight: 700;
+            color: var(--green-dark);
+            font-size: 0.95rem;
+        }
+
+        .comment-timestamp {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .comment-text {
+            color: var(--text-light);
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        /* Emergency Info Footer */
+        footer {
+            background-color: var(--green-dark);
+            color: var(--cream-light);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--orange-light);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-section p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Loading Indicator */
+        .loading {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--green-light);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+
+            #hero .emoji {
+                font-size: 2.5rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+            }
+
+            .timeline-time {
+                margin-bottom: 0.5rem;
+            }
+
+            .comment-input-group {
+                flex-direction: column;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-2 {
+            margin-top: 2rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .success {
+            color: var(--green-light);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">🏕️ Bass Lake 2026</div>
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#reminders">Reminders</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#meals">Meals</a>
+            <a href="#roles">Roles</a>
+            <a href="#checklist">Checklist</a>
+            <a href="#guide">Guide</a>
+            <a href="#comments">Chat</a>
+        </nav>
+        <div class="name-picker-container">
+            <span class="name-picker-label">You:</span>
+            <select id="namePicker">
+                <option value="">Select your name</option>
+                <option value="Danial">Danial</option>
+                <option value="Saif">Saif</option>
+                <option value="Sania">Sania</option>
+                <option value="Mohid">Mohid</option>
+                <option value="Nida">Nida</option>
+                <option value="Eshal">Eshal</option>
+                <option value="Iman">Iman</option>
+                <option value="Alina">Alina</option>
+            </select>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <h1>Bass Lake Camping Trip</h1>
+        <span class="emoji">🏕️</span>
+        <p class="subtitle">May 16–17, 2026 | Bass Lake Provincial Park</p>
+        <p class="tagline">2 Campsites | 4 Tents | 1 Night | 1 Epic Time</p>
+    </section>
+
+    <!-- Trip Overview -->
+    <section id="overview">
+        <h2>Trip Overview</h2>
+        <div class="overview-grid">
+            <div class="info-box">
+                <h4>📍 Location</h4>
+                <p>Bass Lake Provincial Park, Orillia, Ontario</p>
+            </div>
+            <div class="info-box">
+                <h4>📅 Dates</h4>
+                <p>Friday, May 16 — Saturday, May 17, 2026</p>
+            </div>
+            <div class="info-box">
+                <h4>🗺️ Distance</h4>
+                <p>~1.5 hours (140 km via Hwy 400) from Milton</p>
+            </div>
+            <div class="info-box">
+                <h4>⛺ Campsites</h4>
+                <p>2 booked sites for our group</p>
+            </div>
+        </div>
+
+        <div class="card mt-2">
+            <div class="card-title">Our Group Distribution</div>
+            <div class="card-content">
+                <p><strong>Campsite 1:</strong> Danial's family + Saif & Sania</p>
+                <p style="margin-top: 0.5rem;"><strong>Campsite 2:</strong> Mohid & Nida + Eshal, Iman & Alina</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Reminders -->
+    <section id="reminders">
+        <h2>⚠️ Important Reminders</h2>
+        <div class="reminder-cards">
+            <div class="reminder">
+                <div class="reminder-title">🌙 Quiet Hours</div>
+                <div class="reminder-content">11 PM to 7 AM — Keep voices low and music off. Fines possible for violations.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🐻 Food Storage</div>
+                <div class="reminder-content">NEVER store food in tents — raccoons and bears. Keep all food in cars or bear-proof containers.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🔥 Fire Safety</div>
+                <div class="reminder-content">Campfires must be fully extinguished before leaving or sleeping. Use water, not dirt.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🚿 Comfort Stations</div>
+                <div class="reminder-content">Flush toilets, hot showers, laundry available. Bring quarters for laundry machines.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">❄️ May Weather</div>
+                <div class="reminder-content">Daytime 15–20°C, nighttime 3–5°C. Bring warm layers, especially for evenings.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">📱 Cell Reception</div>
+                <div class="reminder-content">Spotty signal at camp. Download offline maps and emergency contacts before arriving.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🐕 Dogs</div>
+                <div class="reminder-content">Dogs allowed on leash, NOT permitted on beaches. Keep them with you at all times.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">✅ Check-in/Out</div>
+                <div class="reminder-content">Check-in: 2 PM | Check-out: 2 PM. Arrive early Friday, leave early Saturday.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trip Timeline -->
+    <section id="timeline">
+        <h2>🕐 Trip Timeline</h2>
+        <div class="timeline">
+            <div class="timeline-day">
+                <div class="timeline-day-title">Friday, May 16</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">3:00 PM</div>
+                    <div class="timeline-content"><strong>Final Gear Check</strong> — Load cars. Confirm headcount.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">3:30 PM</div>
+                    <div class="timeline-content"><strong>Supplies Run</strong> — Pick up ice, groceries, firewood en route.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">5:00 PM</div>
+                    <div class="timeline-content"><strong>Arrival</strong> — Arrive at Bass Lake. Check in at gatehouse.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">5:15 PM</div>
+                    <div class="timeline-content"><strong>Drive to Campsites</strong> — TENTS GO UP FIRST.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">6:00 PM</div>
+                    <div class="timeline-content"><strong>Setup</strong> — Cooking area, chairs, tarp. Start fire.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">6:30 PM</div>
+                    <div class="timeline-content"><strong>Dinner Prep</strong> — BBQ burgers & hot dogs, side dishes.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">7:30 PM</div>
+                    <div class="timeline-content"><strong>Dinner</strong> — Eat together, enjoy the outdoors.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">8:30 PM</div>
+                    <div class="timeline-content"><strong>Cleanup & Campfire</strong> — S'mores, hot chocolate, chai, stories.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">10:00 PM</div>
+                    <div class="timeline-content"><strong>Quiet Time</strong> — Keep voices low. Enjoy the stars. Last calls.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">11:00 PM</div>
+                    <div class="timeline-content"><strong>Sleep</strong> — Extinguish fire. Store food in cars. Head to tents.</div>
+                </div>
+            </div>
+
+            <div class="timeline-day">
+                <div class="timeline-day-title">Saturday, May 17</div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time">7:30 AM</div>
+                    <div class="timeline-content"><strong>Early Risers</strong> — Coffee & tea for the early birds.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">8:30 AM</div>
+                    <div class="timeline-content"><strong>Breakfast Crew</strong> — Eggs, bacon, sausage, toast, naan, fruit.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">9:30 AM</div>
+                    <div class="timeline-content"><strong>Breakfast Cleanup</strong> — Explore time: hike, beach, kayak.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">12:00 PM</div>
+                    <div class="timeline-content"><strong>Lunch</strong> — Wraps, sandwiches, trail mix at campsite or beach.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">1:00 PM</div>
+                    <div class="timeline-content"><strong>Activities & Relaxation</strong> — Swimming, hiking, board games, rest.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">2:00 PM</div>
+                    <div class="timeline-content"><strong>Packing Time</strong> — Start breaking down tents and campsite.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">3:00 PM</div>
+                    <div class="timeline-content"><strong>Final Sweep</strong> — Leave no trace! Depart for Milton.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meal Plan -->
+    <section id="meals">
+        <h2>🍽️ Meal Plan</h2>
+        <div class="meal-cards">
+            <div class="meal-card">
+                <div class="meal-time">Friday Evening</div>
+                <ul class="meal-items">
+                    <li>BBQ burgers & hot dogs</li>
+                    <li>Pita, hummus, veggies</li>
+                    <li>Chips & dip</li>
+                    <li>Fruit platter</li>
+                </ul>
+            </div>
+            <div class="meal-card">
+                <div class="meal-time">Friday Night</div>
+                <ul class="meal-items">
+                    <li>S'mores (marshmallows, chocolate, graham crackers)</li>
+                    <li>Hot chocolate & chai</li>
+                    <li>Jiffy pop popcorn</li>
+                </ul>
+            </div>
+            <div class="meal-card">
+                <div class="meal-time">Saturday Morning</div>
+                <ul class="meal-items">
+                    <li>Scrambled eggs</li>
+                    <li>Turkey bacon & beef sausages</li>
+                    <li>Toast & naan</li>
+                    <li>Fresh fruit</li>
+                    <li>Coffee, tea, juice</li>
+                </ul>
+            </div>
+            <div class="meal-card">
+                <div class="meal-time">Saturday Lunch</div>
+                <ul class="meal-items">
+                    <li>Wraps & sandwiches</li>
+                    <li>Trail mix & granola bars</li>
+                    <li>Cut fruit</li>
+                    <li>Juice & water</li>
+                </ul>
+            </div>
+            <div class="meal-card">
+                <div class="meal-time">Saturday Afternoon</div>
+                <ul class="meal-items">
+                    <li>Chips & cookies</li>
+                    <li>Fresh fruit</li>
+                    <li>Cold drinks</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-title">🛒 Grocery Tips</div>
+            <div class="card-content">
+                <p>Buy perishables Friday morning. Pack coolers with ice carefully — keep raw meat away from ready-to-eat food. Bring extra ice for drinks. Label food with names if shared. Don't forget condiments, oils, salt, pepper!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Role Assignments -->
+    <section id="roles">
+        <h2>👥 Role Assignments</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Everyone will see your name in real-time.</p>
+        <div class="roles-grid" id="rolesContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Gear Checklist -->
+    <section id="checklist">
+        <h2>✅ Gear Checklist</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Check items off as you pack. Your name appears on checked items with a timestamp.</p>
+        <div class="checklist-groups" id="checklistContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- First-Timer's Guide -->
+    <section id="guide">
+        <h2>🏔️ First-Timer's Guide</h2>
+        <div id="accordionContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Comments / Chat -->
+    <section id="comments">
+        <h2>💬 Group Chat</h2>
+        <div class="comments-container">
+            <div class="comment-input-group">
+                <input type="text" id="commentInput" placeholder="Share a message with the group...">
+                <button id="postComment">Post</button>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Emergency Info -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>🏥 Emergency</h3>
+                <p><strong>Orillia Soldiers' Memorial Hospital</strong><br>
+                170 Colborne St W, Orillia<br>
+                ~20 minutes from Bass Lake</p>
+            </div>
+            <div class="footer-section">
+                <h3>🚨 In Case of Emergency</h3>
+                <p>Call 911 and notify park staff immediately.<br>
+                Have your campsite number ready.</p>
+            </div>
+            <div class="footer-section">
+                <h3>📞 Contact Info</h3>
+                <p><strong>Ontario Parks:</strong> 1-888-668-7275<br>
+                <strong>Park Store:</strong> Firewood, ice, basic supplies available.</p>
+            </div>
+        </div>
+        <div class="footer-divider">
+            <p>🏕️ Bass Lake Camping Trip 2026 | May 16–17 | Leave No Trace!</p>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // FIREBASE CONFIGURATION (REPLACE WITH YOUR OWN)
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWTJU0k02anw2N6vTXiQhSTSPwxxgDfM0",
+            authDomain: "bass-lake-trip.firebaseapp.com",
+            projectId: "bass-lake-trip",
+            storageBucket: "bass-lake-trip.firebasestorage.app",
+            messagingSenderId: "415240301888",
+            appId: "1:415240301888:web:79103644258e1a16ecdea5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // ============================================
+        // DATA
+        // ============================================
+        const roles = [
+            { id: 'coordinator', name: 'TRIP COORDINATOR', description: 'Overall trip organizer, timeline keeper', preassigned: 'Danial' },
+            { id: 'dinner-lead', name: 'FOOD LEAD — Dinner', description: 'Friday dinner: BBQ, sides, coordination' },
+            { id: 'breakfast-lead', name: 'FOOD LEAD — Breakfast', description: 'Saturday breakfast: eggs, bacon, toast' },
+            { id: 'lunch-lead', name: 'FOOD LEAD — Lunch & Snacks', description: 'Saturday lunch, afternoon snacks' },
+            { id: 'smores', name: 'S\'MORES & CAMPFIRE SNACKS', description: 'Friday night: s\'mores, hot chocolate, chai' },
+            { id: 'firewood', name: 'FIREWOOD & FIRE MANAGEMENT', description: 'Procure, setup, maintain, extinguish campfire' },
+            { id: 'cooking-eq', name: 'COOKING EQUIPMENT', description: 'Camp stove, pans, utensils, griddle' },
+            { id: 'dishes', name: 'PLATES, CUPS & UTENSILS', description: 'Service ware, napkins, paper towels' },
+            { id: 'coolers', name: 'COOLERS & ICE', description: 'Pack, transport, manage coolers & ice' },
+            { id: 'first-aid', name: 'FIRST AID & SAFETY', description: 'First aid kit, emergency info, safety checks' },
+            { id: 'comfort', name: 'CAMPSITE COMFORT', description: 'Chairs, tarps, lanterns, firewood organization' },
+            { id: 'entertainment', name: 'ENTERTAINMENT', description: 'Games, music, activities, fun' },
+            { id: 'cleanup', name: 'CLEANUP CREW', description: 'After meals, final sweep. Everyone involved!' }
+        ];
+
+        const checklistItems = {
+            'SHELTER & SLEEPING': [
+                'Tent (4-person)',
+                'Sleeping bags',
+                'Sleeping pads/mats',
+                'Blankets/quilts',
+                'Pillows',
+                'Tarps/ground sheets'
+            ],
+            'CLOTHING': [
+                'Warm layers/fleece',
+                'Rain jacket',
+                'Warm hat/toque',
+                'Gloves',
+                'Hiking boots',
+                'Comfortable camp shoes',
+                'Underwear & socks (extra)',
+                'Swimsuit'
+            ],
+            'COOKING & FOOD PREP': [
+                'Camp stove & fuel',
+                'Propane canister',
+                'Large pots & pans',
+                'Griddle for eggs',
+                'Coolers (3–4)',
+                'Ice blocks',
+                'Cooking utensils (spatula, tongs, spoon)',
+                'Knife & cutting board',
+                'Aluminum foil',
+                'Cling wrap',
+                'Ziplock bags (various sizes)',
+                'Can opener'
+            ],
+            'CAMPSITE ESSENTIALS': [
+                'Firewood (pre-ordered or purchased)',
+                'Fire starter (lighter, matches, firestarter)',
+                'Folding camping chairs',
+                'Headlamp/flashlight (+ batteries)',
+                'Lantern (+ fuel)',
+                'Large tarp for cooking area',
+                'Rope/paracord',
+                'Camping table (optional)'
+            ],
+            'COMFORT STATION & HYGIENE': [
+                'Toilet paper & hand sanitizer',
+                'Soap & shampoo',
+                'Toothbrush & toothpaste',
+                'Deodorant',
+                'Feminine hygiene products (if needed)',
+                'Medications (personal)',
+                'Sunscreen',
+                'Lip balm with SPF',
+                'Bug spray',
+                'Wet wipes',
+                'Towel (quick-dry)',
+                'Shower shoes'
+            ],
+            'FIRST AID & SAFETY': [
+                'First aid kit (bandages, gauze, antiseptic)',
+                'Pain relief (ibuprofen, acetaminophen)',
+                'Anti-itch cream (mosquito/poison ivy)',
+                'Thermometer',
+                'Emergency phone numbers',
+                'Whistle',
+                'Matches (waterproof)',
+                'Flashlight (backup)'
+            ],
+            'FUN & ACTIVITIES': [
+                'Board games/cards',
+                'Portable speaker',
+                'Books/magazines',
+                'Binoculars (birdwatching)',
+                'Fishing rod (if interested)',
+                'Sports (frisbee, badminton)',
+                'Sketchpad & colored pencils',
+                'Camera/phone for photos'
+            ]
+        };
+
+        const guides = [
+            {
+                title: 'Setting Up Your Tent',
+                content: `
+                    <ol>
+                        <li><strong>Choose Your Spot:</strong> Find flat, dry ground away from the fire pit. Clear small rocks and sticks.</li>
+                        <li><strong>Lay the Foundation:</strong> Place the groundsheet/tarp. This keeps moisture out and protects the tent floor.</li>
+                        <li><strong>Assemble the Tent:</strong> Insert poles through sleeves, connect corners, and secure stakes into the ground at 45° angles.</li>
+                        <li><strong>Final Check:</strong> Ensure all guy lines are taut, stakes are secure, and zippers work smoothly. You're ready!</li>
+                    </ol>
+                `
+            },
+            {
+                title: 'Staying Warm at Night',
+                content: `
+                    <p><strong>Key Tips:</strong></p>
+                    <ul>
+                        <li>Wear <strong>dry clothing</strong> to bed — moisture kills warmth.</li>
+                        <li>Use <strong>layers</strong> in your sleeping bag — insulation traps heat.</li>
+                        <li>Keep a <strong>hot drink</strong> near your sleeping bag before bed for core warmth.</li>
+                        <li>Eat a <strong>light snack</strong> before sleep — digestion generates warmth.</li>
+                        <li>Never use a <strong>camp stove or lantern</strong> inside a tent — carbon monoxide risk!</li>
+                        <li>If cold, <strong>exercise gently</strong> (jumping jacks) to warm up, then return to your tent.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Campfire 101',
+                content: `
+                    <ol>
+                        <li><strong>Clear the Fire Ring:</strong> Remove leaves, pine needles, overhanging branches. Keep a 10-foot radius clear.</li>
+                        <li><strong>Gather Firewood:</strong> Collect tinder (dry leaves), kindling (small twigs), and fuel wood (logs). Never use dead trees still standing.</li>
+                        <li><strong>Build Your Fire:</strong> Start with tinder in the center, add kindling in a tepee shape, light it, then slowly add larger logs.</li>
+                        <li><strong>Maintain the Fire:</strong> Keep it contained in the ring. Never leave it unattended. Keep water nearby.</li>
+                        <li><strong>Extinguish Properly:</strong> Drown with water, stir ashes, drown again. Test with your hand — it should be cool to touch before bed.</li>
+                    </ol>
+                `
+            },
+            {
+                title: 'Comfort Station Tips',
+                content: `
+                    <p><strong>Using Facilities:</strong></p>
+                    <ul>
+                        <li><strong>Showers:</strong> Bring shower shoes, a towel, and toiletries. Showers are hot and often limited.</li>
+                        <li><strong>Toilets:</strong> Flush toilets available 24/7. Bring hand sanitizer and wet wipes.</li>
+                        <li><strong>Laundry:</strong> Washing machines available. Bring quarters and detergent.</li>
+                        <li><strong>Water:</strong> Tap water is safe to drink. Fill up water bottles regularly.</li>
+                        <li><strong>Courtesy:</strong> Keep facilities clean. Report any issues to park staff immediately.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        // ============================================
+        // STATE & DOM
+        // ============================================
+        let currentUser = localStorage.getItem('campingUser') || '';
+        let firebaseReady = false;
+        let currentRoles = {};
+        let currentChecklist = {};
+        let currentComments = [];
+
+        // ============================================
+        // NAME PICKER
+        // ============================================
+        const namePicker = document.getElementById('namePicker');
+        namePicker.value = currentUser;
+
+        namePicker.addEventListener('change', async (e) => {
+            currentUser = e.target.value;
+            localStorage.setItem('campingUser', currentUser);
+            console.log('Selected user:', currentUser);
+        });
+
+        // ============================================
+        // ROLES
+        // ============================================
+        function renderRoles() {
+            const container = document.getElementById('rolesContainer');
+            container.innerHTML = '';
+
+            roles.forEach(role => {
+                const claimed = currentRoles[role.id] || null;
+                const card = document.createElement('div');
+                card.className = 'role-card';
+
+                let claimedHTML = '';
+                if (claimed) {
+                    claimedHTML = `<div class="role-claimed-by">✓ ${claimed}</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="role-name">${role.name}</div>
+                    <div class="role-description">${role.description}</div>
+                    ${claimedHTML}
+                    <button class="claim-button" data-role-id="${role.id}" ${claimed ? 'disabled' : ''}>
+                        ${claimed ? 'Already Claimed' : 'Claim This Role'}
+                    </button>
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Attach event listeners
+            document.querySelectorAll('.claim-button').forEach(btn => {
+                btn.addEventListener('click', claimRole);
+            });
+        }
+
+        async function claimRole(e) {
+            if (!currentUser) {
+                alert('Please select your name first!');
+                return;
+            }
+
+            const roleId = e.target.dataset.roleId;
+            if (!firebaseReady) {
+                alert('Firebase is not ready. Please check your config.');
+                return;
+            }
+
+            try {
+                await db.collection('roles').doc(roleId).set({
+                    claimedBy: currentUser,
+                    timestamp: new Date()
+                });
+                loadRoles();
+            } catch (error) {
+                console.error('Error claiming role:', error);
+                alert('Error claiming role. Check console.');
+            }
+        }
+
+        async function loadRoles() {
+            if (!firebaseReady) return;
+            try {
+                const snapshot = await db.collection('roles').get();
+                currentRoles = {};
+                snapshot.forEach(doc => {
+                    currentRoles[doc.id] = doc.data().claimedBy;
+                });
+                renderRoles();
+            } catch (error) {
+                console.error('Error loading roles:', error);
+            }
+        }
+
+        // ============================================
+        // CHECKLIST
+        // ============================================
+        function renderChecklist() {
+            const container = document.getElementById('checklistContainer');
+            container.innerHTML = '';
+
+            Object.entries(checklistItems).forEach(([category, items]) => {
+                const group = document.createElement('div');
+                group.className = 'checklist-group';
+
+                const title = document.createElement('div');
+                title.className = 'checklist-group-title';
+                title.textContent = category;
+                group.appendChild(title);
+
+                const itemsDiv = document.createElement('div');
+                itemsDiv.className = 'checklist-items';
+
+                items.forEach(item => {
+                    const itemKey = `${category}|${item}`;
+                    const data = currentChecklist[itemKey] || {};
+                    const isChecked = data.checked || false;
+                    const checkedBy = data.checkedBy || '';
+                    const timestamp = data.timestamp || '';
+
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `checklist-item ${isChecked ? 'checked' : ''}`;
+
+                    let infoHTML = '';
+                    if (isChecked && checkedBy) {
+                        const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        infoHTML = `<div class="checklist-item-info">✓ ${checkedBy} — ${time}</div>`;
+                    }
+
+                    itemDiv.innerHTML = `
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} data-item-key="${itemKey}">
+                        <div class="checklist-item-content">
+                            <label class="checklist-item-label">${item}</label>
+                            ${infoHTML}
+                        </div>
+                    `;
+
+                    itemsDiv.appendChild(itemDiv);
+                });
+
+                group.appendChild(itemsDiv);
+                container.appendChild(group);
+            });
+
+            // Attach listeners
+            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', toggleChecklistItem);
+            });
+        }
+
+        async function toggleChecklistItem(e) {
+            if (!currentUser) {
+                alert('Please select your name first!');
+                e.target.checked = !e.target.checked;
+                return;
+            }
+
+            const itemKey = e.target.dataset.itemKey;
+            const isChecked = e.target.checked;
+
+            if (!firebaseReady) {
+                alert('Firebase is not ready.');
+                e.target.checked = !e.target.checked;
+                return;
+            }
+
+            try {
+                const docId = itemKey.replace(/[|]/g, '_');
+                await db.collection('checklist').doc(docId).set({
+                    itemKey: itemKey,
+                    checked: isChecked,
+                    checkedBy: isChecked ? currentUser : '',
+                    timestamp: isChecked ? new Date() : null
+                });
+                loadChecklist();
+            } catch (error) {
+                console.error('Error updating checklist:', error);
+                e.target.checked = !e.target.checked;
+            }
+        }
+
+        async function loadChecklist() {
+            if (!firebaseReady) return;
+            try {
+                const snapshot = await db.collection('checklist').get();
+                currentChecklist = {};
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    currentChecklist[data.itemKey] = {
+                        checked: data.checked,
+                        checkedBy: data.checkedBy,
+                        timestamp: data.timestamp
+                    };
+                });
+                renderChecklist();
+            } catch (error) {
+                console.error('Error loading checklist:', error);
+            }
+        }
+
+        // ============================================
+        // ACCORDION
+        // ============================================
+        function renderAccordion() {
+            const container = document.getElementById('accordionContainer');
+            container.innerHTML = '';
+
+            guides.forEach((guide, index) => {
+                const item = document.createElement('div');
+                item.className = 'accordion-item';
+
+                const header = document.createElement('div');
+                header.className = 'accordion-header';
+                header.innerHTML = `
+                    ${guide.title}
+                    <span class="accordion-toggle">▼</span>
+                `;
+
+                const content = document.createElement('div');
+                content.className = 'accordion-content';
+                content.innerHTML = guide.content;
+
+                header.addEventListener('click', () => {
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+                });
+
+                item.appendChild(header);
+                item.appendChild(content);
+                container.appendChild(item);
+            });
+        }
+
+        // ============================================
+        // COMMENTS / CHAT
+        // ============================================
+        function renderComments() {
+            const container = document.getElementById('commentsList');
+            container.innerHTML = '';
+
+            if (currentComments.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-light); text-align: center;">No messages yet. Be the first to share!</p>';
+                return;
+            }
+
+            currentComments.forEach(comment => {
+                const div = document.createElement('div');
+                div.className = 'comment';
+
+                const time = new Date(comment.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                div.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-name">${comment.name}</div>
+                        <div class="comment-timestamp">${time}</div>
+                    </div>
+                    <div class="comment-text">${escapeHtml(comment.message)}</div>
+                `;
+
+                container.appendChild(div);
+            });
+
+            // Scroll to latest
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 100);
+        }
+
+        async function postComment() {
+            if (!currentUser) {
+                alert('Please select your name first!');
+                return;
+            }
+
+            const input = document.getElementById('commentInput');
+            const message = input.value.trim();
+
+            if (!message) {
+                alert('Please type a message!');
+                return;
+            }
+
+            if (!firebaseReady) {
+                alert('Firebase is not ready.');
+                return;
+            }
+
+            try {
+                await db.collection('comments').add({
+                    name: currentUser,
+                    message: message,
+                    timestamp: new Date()
+                });
+                input.value = '';
+                loadComments();
+            } catch (error) {
+                console.error('Error posting comment:', error);
+                alert('Error posting comment. Check console.');
+            }
+        }
+
+        async function loadComments() {
+            if (!firebaseReady) return;
+            try {
+                const snapshot = await db.collection('comments')
+                    .orderBy('timestamp', 'asc')
+                    .limit(50)
+                    .get();
+                currentComments = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    currentComments.push({
+                        id: doc.id,
+                        name: data.name,
+                        message: data.message,
+                        timestamp: data.timestamp?.toDate?.() || new Date()
+                    });
+                });
+                renderComments();
+            } catch (error) {
+                console.error('Error loading comments:', error);
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============================================
+        // POST COMMENT BUTTON
+        // ============================================
+        document.getElementById('postComment').addEventListener('click', postComment);
+        document.getElementById('commentInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') postComment();
+        });
+
+        // ============================================
+        // FIREBASE LISTENER
+        // ============================================
+        function initializeFirebase() {
+            try {
+                // Test connection
+                db.collection('roles').limit(1).get().then(() => {
+                    firebaseReady = true;
+                    console.log('Firebase connected!');
+
+                    // Load data
+                    loadRoles();
+                    loadChecklist();
+                    loadComments();
+
+                    // Real-time listeners
+                    db.collection('roles').onSnapshot(() => {
+                        loadRoles();
+                    });
+
+                    db.collection('checklist').onSnapshot(() => {
+                        loadChecklist();
+                    });
+
+                    db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(() => {
+                        loadComments();
+                    });
+                }).catch((error) => {
+                    console.error('Firebase error:', error);
+                    console.warn('Using offline mode. Data will not persist.');
+                    firebaseReady = false;
+                    renderRoles();
+                    renderChecklist();
+                    renderAccordion();
+                    renderComments();
+                });
+            } catch (error) {
+                console.error('Firebase initialization error:', error);
+                console.warn('Using offline mode.');
+                firebaseReady = false;
+                renderRoles();
+                renderChecklist();
+                renderAccordion();
+                renderComments();
+            }
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAccordion();
+            initializeFirebase();
+
+            // Fallback: render without firebase after 3 seconds
+            setTimeout(() => {
+                if (!firebaseReady) {
+                    renderRoles();
+                    renderChecklist();
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
