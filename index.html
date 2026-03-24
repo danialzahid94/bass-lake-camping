@@ -1438,7 +1438,7 @@
                     currentChecklist[data.itemKey] = {
                         checked: data.checked,
                         checkedBy: data.checkedBy,
-                        timestamp: data.timestamp
+                        timestamp: data.timestamp?.toDate?.() || null
                     };
                 });
                 renderChecklist();
