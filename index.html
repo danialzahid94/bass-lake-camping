@@ -415,12 +415,77 @@
             color: var(--text-light);
             font-size: 0.95rem;
             line-height: 1.6;
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .meal-items li {
-            margin-left: 1.5rem;
-            margin-bottom: 0.3rem;
+        .meal-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            border-bottom: 1px solid #f0ead0;
         }
+
+        .meal-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .meal-remove-btn {
+            background: none;
+            border: none;
+            color: #c0392b;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0 0.3rem;
+            opacity: 0.5;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .meal-remove-btn:hover { opacity: 1; }
+
+        .meal-empty {
+            color: #bbb;
+            font-style: italic;
+            font-size: 0.88rem;
+            padding: 0.4rem 0;
+        }
+
+        .meal-add-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.9rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #f0ead0;
+        }
+
+        .meal-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.88rem;
+            background: #fdf8ef;
+            font-family: inherit;
+        }
+
+        .meal-input:focus { outline: none; border-color: var(--orange-light); }
+
+        .meal-add-btn {
+            background: var(--green-light);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.4rem 0.85rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .meal-add-btn:hover { background: var(--green-dark); }
 
         /* Role Assignments */
         .roles-grid {
@@ -453,15 +518,26 @@
             line-height: 1.5;
         }
 
-        .role-claimed-by {
+        .role-claimants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .role-claim-pill {
             background-color: var(--green-light);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 0.85rem;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-bottom: 1rem;
+            font-size: 0.82rem;
+        }
+
+        .role-slots {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
         }
 
         .claim-button {
@@ -486,6 +562,15 @@
             background-color: #999;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .claim-button.unclaim {
+            background-color: #888;
+        }
+
+        .claim-button.unclaim:hover {
+            background-color: #666;
+            box-shadow: none;
         }
 
         /* Checklist */
@@ -1089,51 +1174,9 @@
     <!-- Meal Plan -->
     <section id="meals">
         <h2>🍽️ Meal Plan</h2>
-        <div class="meal-cards">
-            <div class="meal-card">
-                <div class="meal-time">Saturday Evening</div>
-                <ul class="meal-items">
-                    <li>BBQ burgers & hot dogs</li>
-                    <li>Pita, hummus, veggies</li>
-                    <li>Chips & dip</li>
-                    <li>Fruit platter</li>
-                </ul>
-            </div>
-            <div class="meal-card">
-                <div class="meal-time">Saturday Night</div>
-                <ul class="meal-items">
-                    <li>S'mores (marshmallows, chocolate, graham crackers)</li>
-                    <li>Hot chocolate & chai</li>
-                    <li>Jiffy pop popcorn</li>
-                </ul>
-            </div>
-            <div class="meal-card">
-                <div class="meal-time">Sunday Morning</div>
-                <ul class="meal-items">
-                    <li>Scrambled eggs</li>
-                    <li>Turkey bacon & beef sausages</li>
-                    <li>Toast & naan</li>
-                    <li>Fresh fruit</li>
-                    <li>Coffee, tea, juice</li>
-                </ul>
-            </div>
-            <div class="meal-card">
-                <div class="meal-time">Sunday Lunch</div>
-                <ul class="meal-items">
-                    <li>Wraps & sandwiches</li>
-                    <li>Trail mix & granola bars</li>
-                    <li>Cut fruit</li>
-                    <li>Juice & water</li>
-                </ul>
-            </div>
-            <div class="meal-card">
-                <div class="meal-time">Saturday Afternoon (Arrival Snacks)</div>
-                <ul class="meal-items">
-                    <li>Chips & cookies</li>
-                    <li>Fresh fruit</li>
-                    <li>Cold drinks</li>
-                </ul>
-            </div>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Select your name above, then add what you're bringing to each meal. Click × next to your own items to remove them.</p>
+        <div class="meal-cards" id="mealsContainer">
+            <!-- Populated by JavaScript -->
         </div>
         <div class="card mt-2">
             <div class="card-title">🛒 Grocery Tips</div>
@@ -1146,7 +1189,7 @@
     <!-- Role Assignments -->
     <section id="roles">
         <h2>👥 Role Assignments</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Everyone will see your name in real-time.</p>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Up to 3 people can share a role. Everyone will see updates in real-time.</p>
         <div class="roles-grid" id="rolesContainer">
             <!-- Populated by JavaScript -->
         </div>
@@ -1384,6 +1427,16 @@
         let currentRoles = {};
         let currentChecklist = {};
         let currentComments = [];
+        let currentMealItems = {};
+
+        const mealSlots = [
+            { id: 'saturday-afternoon', label: 'Saturday Afternoon' },
+            { id: 'saturday-evening',   label: 'Saturday Evening' },
+            { id: 'saturday-night',     label: 'Saturday Night' },
+            { id: 'sunday-morning',     label: 'Sunday Morning' },
+            { id: 'sunday-lunch',       label: 'Sunday Lunch' },
+            { id: 'snacks',             label: 'Snacks' },
+        ];
 
         // ============================================
         // NAME PICKER
@@ -1398,6 +1451,105 @@
         });
 
         // ============================================
+        // MEAL PLAN
+        // ============================================
+        function renderMeals() {
+            const container = document.getElementById('mealsContainer');
+            container.innerHTML = '';
+
+            mealSlots.forEach(slot => {
+                const items = currentMealItems[slot.id] || [];
+                const card = document.createElement('div');
+                card.className = 'meal-card';
+
+                const itemsHTML = items.length === 0
+                    ? `<li class="meal-empty">Nothing added yet — be the first!</li>`
+                    : items.map(item => `
+                        <li class="meal-item-row">
+                            <span>${item.text}</span>
+                            ${item.addedBy === currentUser
+                                ? `<button class="meal-remove-btn" data-doc-id="${item.id}" title="Remove">×</button>`
+                                : `<span style="font-size:0.78rem;color:#aaa;padding-right:0.3rem">${item.addedBy}</span>`
+                            }
+                        </li>`).join('');
+
+                card.innerHTML = `
+                    <div class="meal-time">${slot.label}</div>
+                    <ul class="meal-items">${itemsHTML}</ul>
+                    <div class="meal-add-row">
+                        <input class="meal-input" type="text" placeholder="Add an item..." data-meal-id="${slot.id}">
+                        <button class="meal-add-btn" data-meal-id="${slot.id}">Add</button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            container.querySelectorAll('.meal-add-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const mealId = btn.dataset.mealId;
+                    const input = container.querySelector(`.meal-input[data-meal-id="${mealId}"]`);
+                    const text = input.value.trim();
+                    if (text) { addMealItem(mealId, text); input.value = ''; }
+                });
+            });
+
+            container.querySelectorAll('.meal-input').forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const text = input.value.trim();
+                        if (text) { addMealItem(input.dataset.mealId, text); input.value = ''; }
+                    }
+                });
+            });
+
+            container.querySelectorAll('.meal-remove-btn').forEach(btn => {
+                btn.addEventListener('click', () => removeMealItem(btn.dataset.docId));
+            });
+        }
+
+        async function addMealItem(mealId, text) {
+            if (!currentUser) { alert('Please select your name first!'); return; }
+            if (!firebaseReady) return;
+            try {
+                await db.collection('meal_items').add({
+                    mealId,
+                    text,
+                    addedBy: currentUser,
+                    timestamp: new Date()
+                });
+            } catch (error) {
+                console.error('Error adding meal item:', error);
+            }
+        }
+
+        async function removeMealItem(docId) {
+            if (!firebaseReady) return;
+            try {
+                await db.collection('meal_items').doc(docId).delete();
+            } catch (error) {
+                console.error('Error removing meal item:', error);
+            }
+        }
+
+        async function loadMealItems() {
+            if (!firebaseReady) return;
+            try {
+                const snapshot = await db.collection('meal_items').orderBy('timestamp', 'asc').get();
+                currentMealItems = {};
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    if (!currentMealItems[d.mealId]) currentMealItems[d.mealId] = [];
+                    currentMealItems[d.mealId].push({ id: doc.id, text: d.text, addedBy: d.addedBy });
+                });
+                renderMeals();
+            } catch (error) {
+                console.error('Error loading meal items:', error);
+                renderMeals();
+            }
+        }
+
+        // ============================================
         // ROLES
         // ============================================
         function renderRoles() {
@@ -1405,30 +1557,41 @@
             container.innerHTML = '';
 
             roles.forEach(role => {
-                const claimed = currentRoles[role.id] || null;
+                const claimants = currentRoles[role.id] || [];
+                const isMine = claimants.includes(currentUser);
+                const isFull = claimants.length >= 3;
                 const card = document.createElement('div');
                 card.className = 'role-card';
 
-                const isMyRole = claimed && claimed === currentUser;
+                const pillsHTML = claimants.length > 0
+                    ? `<div class="role-claimants">${claimants.map(n => `<span class="role-claim-pill">✓ ${n}</span>`).join('')}</div>`
+                    : '';
 
-                let claimedHTML = '';
-                if (claimed) {
-                    claimedHTML = `<div class="role-claimed-by">✓ ${claimed}</div>`;
+                const slotsLeft = 3 - claimants.length;
+                const slotsHTML = `<div class="role-slots">${claimants.length}/3 claimed${slotsLeft > 0 ? ` · ${slotsLeft} spot${slotsLeft > 1 ? 's' : ''} open` : ''}</div>`;
+
+                let btnLabel, btnDisabled, btnClass;
+                if (isMine) {
+                    btnLabel = 'Unclaim'; btnDisabled = false; btnClass = 'claim-button unclaim';
+                } else if (isFull) {
+                    btnLabel = 'Full (3/3)'; btnDisabled = true; btnClass = 'claim-button';
+                } else {
+                    btnLabel = 'Claim This Role'; btnDisabled = false; btnClass = 'claim-button';
                 }
 
                 card.innerHTML = `
                     <div class="role-name">${role.name}</div>
                     <div class="role-description">${role.description}</div>
-                    ${claimedHTML}
-                    <button class="claim-button" data-role-id="${role.id}" data-unclaim="${isMyRole}" ${claimed && !isMyRole ? 'disabled' : ''}>
-                        ${isMyRole ? 'Unclaim' : claimed ? 'Already Claimed' : 'Claim This Role'}
+                    ${pillsHTML}
+                    ${slotsHTML}
+                    <button class="${btnClass}" data-role-id="${role.id}" data-unclaim="${isMine}" ${btnDisabled ? 'disabled' : ''}>
+                        ${btnLabel}
                     </button>
                 `;
 
                 container.appendChild(card);
             });
 
-            // Attach event listeners
             document.querySelectorAll('.claim-button').forEach(btn => {
                 btn.addEventListener('click', claimRole);
             });
@@ -1448,13 +1611,11 @@
             }
 
             try {
+                const ref = db.collection('roles').doc(roleId);
                 if (isUnclaim) {
-                    await db.collection('roles').doc(roleId).delete();
+                    await ref.update({ claimedBy: firebase.firestore.FieldValue.arrayRemove(currentUser) });
                 } else {
-                    await db.collection('roles').doc(roleId).set({
-                        claimedBy: currentUser,
-                        timestamp: new Date()
-                    });
+                    await ref.set({ claimedBy: firebase.firestore.FieldValue.arrayUnion(currentUser) }, { merge: true });
                 }
                 loadRoles();
             } catch (error) {
@@ -1469,7 +1630,9 @@
                 const snapshot = await db.collection('roles').get();
                 currentRoles = {};
                 snapshot.forEach(doc => {
-                    currentRoles[doc.id] = doc.data().claimedBy;
+                    const raw = doc.data().claimedBy;
+                    // handle legacy string values
+                    currentRoles[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
                 });
                 renderRoles();
             } catch (error) {
@@ -1733,25 +1896,20 @@
 
                     // Load data
                     loadRoles();
+                    loadMealItems();
                     loadChecklist();
                     loadComments();
 
                     // Real-time listeners
-                    db.collection('roles').onSnapshot(() => {
-                        loadRoles();
-                    });
-
-                    db.collection('checklist').onSnapshot(() => {
-                        loadChecklist();
-                    });
-
-                    db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(() => {
-                        loadComments();
-                    });
+                    db.collection('roles').onSnapshot(() => { loadRoles(); });
+                    db.collection('meal_items').onSnapshot(() => { loadMealItems(); });
+                    db.collection('checklist').onSnapshot(() => { loadChecklist(); });
+                    db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(() => { loadComments(); });
                 }).catch((error) => {
                     console.error('Firebase error:', error);
                     console.warn('Using offline mode. Data will not persist.');
                     firebaseReady = false;
+                    renderMeals();
                     renderRoles();
                     renderChecklist();
                     renderAccordion();
