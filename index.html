@@ -47,12 +47,14 @@
             top: 0;
             z-index: 1000;
             background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
-            padding: 1rem 2rem;
+            padding: 0.75rem 2rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 1rem;
         }
 
@@ -87,6 +89,7 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
+
 
         .name-picker-container {
             display: flex;
@@ -860,13 +863,11 @@
             }
 
             header {
-                flex-direction: column;
-                gap: 1rem;
+                padding: 0.6rem 1rem;
             }
 
             nav {
-                order: 3;
-                width: 100%;
+                display: none;
             }
 
             section {
@@ -928,20 +929,21 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">🏕️ Bass Lake 2026</div>
-        <nav>
-            <a href="#overview">Overview</a>
-            <a href="#reminders">Reminders</a>
-            <a href="#timeline">Timeline</a>
-            <a href="#meals">Meals</a>
-            <a href="#roles">Roles</a>
-            <a href="#checklist">Checklist</a>
-            <a href="#guide">Guide</a>
-            <a href="#comments">Chat</a>
-        </nav>
-        <div class="name-picker-container">
-            <span class="name-picker-label">You:</span>
-            <select id="namePicker">
+        <div class="header-row">
+            <div class="logo">🏕️ Bass Lake 2026</div>
+            <nav>
+                <a href="#overview">Overview</a>
+                <a href="#reminders">Reminders</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#meals">Meals</a>
+                <a href="#roles">Roles</a>
+                <a href="#checklist">Checklist</a>
+                <a href="#guide">Guide</a>
+                <a href="#comments">Chat</a>
+            </nav>
+            <div class="name-picker-container">
+                <span class="name-picker-label">You:</span>
+                <select id="namePicker">
                 <option value="">Select your name</option>
                 <option value="Danial">Danial</option>
                 <option value="Izza">Izza</option>
@@ -953,6 +955,7 @@
                 <option value="Iman">Iman</option>
                 <option value="Alina">Alina</option>
             </select>
+            </div>
         </div>
     </header>
 
