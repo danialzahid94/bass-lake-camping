@@ -1409,6 +1409,8 @@
                 const card = document.createElement('div');
                 card.className = 'role-card';
 
+                const isMyRole = claimed && claimed === currentUser;
+
                 let claimedHTML = '';
                 if (claimed) {
                     claimedHTML = `<div class="role-claimed-by">✓ ${claimed}</div>`;
@@ -1418,8 +1420,8 @@
                     <div class="role-name">${role.name}</div>
                     <div class="role-description">${role.description}</div>
                     ${claimedHTML}
-                    <button class="claim-button" data-role-id="${role.id}" ${claimed ? 'disabled' : ''}>
-                        ${claimed ? 'Already Claimed' : 'Claim This Role'}
+                    <button class="claim-button" data-role-id="${role.id}" data-unclaim="${isMyRole}" ${claimed && !isMyRole ? 'disabled' : ''}>
+                        ${isMyRole ? 'Unclaim' : claimed ? 'Already Claimed' : 'Claim This Role'}
                     </button>
                 `;
 
@@ -1439,20 +1441,25 @@
             }
 
             const roleId = e.target.dataset.roleId;
+            const isUnclaim = e.target.dataset.unclaim === 'true';
             if (!firebaseReady) {
                 alert('Firebase is not ready. Please check your config.');
                 return;
             }
 
             try {
-                await db.collection('roles').doc(roleId).set({
-                    claimedBy: currentUser,
-                    timestamp: new Date()
-                });
+                if (isUnclaim) {
+                    await db.collection('roles').doc(roleId).delete();
+                } else {
+                    await db.collection('roles').doc(roleId).set({
+                        claimedBy: currentUser,
+                        timestamp: new Date()
+                    });
+                }
                 loadRoles();
             } catch (error) {
-                console.error('Error claiming role:', error);
-                alert('Error claiming role. Check console.');
+                console.error('Error updating role:', error);
+                alert('Error updating role. Check console.');
             }
         }
 
