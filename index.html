@@ -1414,9 +1414,9 @@
         ];
 
         const tents = [
-            { id: 'tent1', label: 'Tent 1' },
-            { id: 'tent2', label: 'Tent 2' },
-            { id: 'tent3', label: 'Tent 3' },
+            { id: 'tent1', label: 'Tent 1', leader: 'Danial' },
+            { id: 'tent2', label: 'Tent 2', leader: 'Saif' },
+            { id: 'tent3', label: 'Tent 3', leader: 'Mohid' },
         ];
 
         const tentChecklistItems = [
@@ -1769,7 +1769,7 @@
             tents.forEach(tent => {
                 const card = document.createElement('div');
                 card.className = 'tent-card';
-                card.innerHTML = `<div class="tent-card-header">${tent.label}</div>`;
+                card.innerHTML = `<div class="tent-card-header">${tent.label} <span style="font-weight:400;opacity:0.8;font-size:0.82rem">· ${tent.leader}</span></div>`;
 
                 let currentSub = null;
                 tentChecklistItems.forEach(item => {
