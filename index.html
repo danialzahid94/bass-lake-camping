@@ -576,75 +576,159 @@
             box-shadow: none;
         }
 
-        /* Checklist */
-        .checklist-groups {
-            margin-top: 2rem;
+        /* Checklist — Section Headers */
+        .checklist-section-header {
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--orange-light);
         }
-
-        .checklist-group {
-            margin-bottom: 2rem;
-        }
-
-        .checklist-group-title {
+        .checklist-section-header:first-child { margin-top: 1rem; }
+        .checklist-section-title {
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--green-dark);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--green-light);
+        }
+        .checklist-section-desc {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
         }
 
-        .checklist-items {
+        /* Per Tent */
+        .tent-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 1rem;
         }
-
-        .checklist-item {
+        .tent-card {
+            background: white;
+            border-radius: 10px;
+            border-top: 4px solid var(--green-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .tent-card-header {
+            background: var(--green-dark);
+            color: white;
+            padding: 0.65rem 1rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+        .tent-subcategory {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+            padding: 0.6rem 0.85rem 0.3rem;
+        }
+        .tent-item {
             display: flex;
             align-items: flex-start;
-            gap: 0.8rem;
-            padding: 1rem;
-            background-color: white;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            gap: 0.6rem;
+            padding: 0.5rem 0.85rem;
+            border-bottom: 1px solid #f5f0e8;
         }
-
-        .checklist-item.checked {
-            background-color: #E8F5E9;
-            border-color: var(--green-light);
-        }
-
-        .checklist-item input[type="checkbox"] {
-            margin-top: 0.2rem;
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
+        .tent-item:last-child { border-bottom: none; }
+        .tent-item.checked { background: #f0f9f0; }
+        .tent-item input[type="checkbox"] {
+            width: 16px; height: 16px;
             accent-color: var(--green-light);
-        }
-
-        .checklist-item-content {
-            flex: 1;
-        }
-
-        .checklist-item-label {
-            display: block;
-            font-weight: 500;
-            color: var(--text-dark);
-            margin-bottom: 0.2rem;
             cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 0.15rem;
         }
-
-        .checklist-item.checked .checklist-item-label {
+        .tent-item-content { flex: 1; }
+        .tent-item-label {
+            font-size: 0.88rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            display: block;
+        }
+        .tent-item.checked .tent-item-label {
             text-decoration: line-through;
             color: var(--text-light);
         }
-
-        .checklist-item-info {
-            font-size: 0.8rem;
+        .tent-item-info {
+            font-size: 0.72rem;
             color: var(--text-light);
-            margin-top: 0.3rem;
+            margin-top: 0.1rem;
+        }
+
+        /* Communal */
+        .communal-group { margin-bottom: 1.75rem; }
+        .communal-group-title {
+            font-weight: 700;
+            color: var(--brown-dark);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.6rem;
+        }
+        .communal-items-list { display: flex; flex-direction: column; gap: 0.45rem; }
+        .communal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.55rem 0.9rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            gap: 0.75rem;
+        }
+        .communal-item-left { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
+        .communal-item-name { font-size: 0.9rem; color: var(--text-dark); }
+        .communal-claimants { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .communal-claim-pill {
+            background: var(--green-light);
+            color: white;
+            padding: 0.1rem 0.55rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .communal-btn {
+            background: var(--green-light);
+            color: white;
+            border: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .communal-btn:hover { background: var(--green-dark); }
+        .communal-btn.unclaim { background: #999; }
+        .communal-btn.unclaim:hover { background: #777; }
+        .communal-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Personal */
+        .personal-group { margin-bottom: 1.5rem; }
+        .personal-priority-badge {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.65rem;
+        }
+        .personal-priority-badge.must-have  { background: #ffebee; color: #c62828; }
+        .personal-priority-badge.toiletries { background: #e8f5e9; color: #2e7d32; }
+        .personal-priority-badge.nice-to-have { background: #e3f2fd; color: #1565c0; }
+        .personal-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .personal-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            color: var(--text-dark);
         }
 
         /* Accordion */
@@ -919,6 +1003,15 @@
             .timeline-content {
                 width: 100%;
                 font-size: 0.9rem;
+            }
+
+            .tent-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .communal-item {
+                flex-wrap: wrap;
             }
 
             .comment-input-group {
@@ -1231,7 +1324,7 @@
     <!-- Gear Checklist -->
     <section id="checklist">
         <h2>✅ Gear Checklist</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Check items off as you pack. Your name appears on checked items with a timestamp.</p>
+        <p style="margin-bottom: 0.5rem; color: var(--text-light);">Three sections: per-tent gear to check off, communal items to claim (max 3 per item), and a personal packing reference.</p>
         <div class="checklist-groups" id="checklistContainer">
             <!-- Populated by JavaScript -->
         </div>
@@ -1320,83 +1413,62 @@
             { id: 'cleanup', name: 'CLEANUP CREW', description: 'After meals, final sweep. Everyone involved!' }
         ];
 
-        const checklistItems = {
-            'SHELTER & SLEEPING': [
-                'Tent (4-person)',
-                'Sleeping bags',
-                'Sleeping pads/mats',
-                'Blankets/quilts',
-                'Pillows',
-                'Tarps/ground sheets'
+        const tents = [
+            { id: 'tent1', label: 'Tent 1' },
+            { id: 'tent2', label: 'Tent 2' },
+            { id: 'tent3', label: 'Tent 3' },
+        ];
+
+        const tentChecklistItems = [
+            { sub: 'Shelter', key: 'tent',   label: 'Tent' },
+            { sub: 'Shelter', key: 'tarp',   label: 'Tarp / Ground Sheet (optional)' },
+            { sub: 'Sleeping', key: 'sleeping-bag', label: 'Sleeping bag / Mattress' },
+            { sub: 'Sleeping', key: 'blankets',     label: 'Blankets / Quilts' },
+            { sub: 'Sleeping', key: 'pillows',      label: 'Pillows' },
+            { sub: 'Sleeping', key: 'light',        label: 'Light (lantern / headlamp)' },
+        ];
+
+        const communalChecklistItems = {
+            'Kitchen': [
+                'Camp stove & fuel', 'Propane canister', 'Large pots & pans',
+                'Griddle for eggs', 'Coolers (3–4)', 'Ice blocks',
+                'Cooking utensils (spatula, tongs, spoon)', 'Knife & cutting board',
+                'Aluminum foil', 'Cling wrap', 'Ziplock bags', 'Can opener',
             ],
-            'CLOTHING': [
-                'Warm layers/fleece',
-                'Rain jacket',
-                'Warm hat/toque',
-                'Gloves',
-                'Hiking boots',
+            'Campsite': [
+                'Firewood', 'Fire starter (lighter, matches)',
+                'Folding camping chairs', 'Cooking area tarp',
+                'Rope / paracord', 'Camping table (optional)', 'Lantern',
+            ],
+            'Safety': [
+                'First aid kit', 'Pain relief (ibuprofen, acetaminophen)',
+                'Anti-itch cream', 'Thermometer', 'Waterproof matches', 'Whistle',
+            ],
+            'Shared Supplies': [
+                'Toilet paper & hand sanitizer', 'Soap & shampoo',
+                'Wet wipes', 'Bug spray', 'Sunscreen',
+            ],
+            'Fun': [
+                'Board games / cards', 'Portable speaker',
+                'Sports gear (frisbee, badminton)', 'Fishing rod',
+            ],
+        };
+
+        const personalChecklistItems = {
+            'Must Have': [
+                'Warm layers / fleece', 'Rain jacket', 'Warm hat / toque', 'Gloves',
+                'Hiking boots / sturdy shoes', 'Swimsuit', 'Extra socks & underwear',
                 'Comfortable camp shoes',
-                'Underwear & socks (extra)',
-                'Swimsuit'
             ],
-            'COOKING & FOOD PREP': [
-                'Camp stove & fuel',
-                'Propane canister',
-                'Large pots & pans',
-                'Griddle for eggs',
-                'Coolers (3–4)',
-                'Ice blocks',
-                'Cooking utensils (spatula, tongs, spoon)',
-                'Knife & cutting board',
-                'Aluminum foil',
-                'Cling wrap',
-                'Ziplock bags (various sizes)',
-                'Can opener'
-            ],
-            'CAMPSITE ESSENTIALS': [
-                'Firewood (pre-ordered or purchased)',
-                'Fire starter (lighter, matches, firestarter)',
-                'Folding camping chairs',
-                'Headlamp/flashlight (+ batteries)',
-                'Lantern (+ fuel)',
-                'Large tarp for cooking area',
-                'Rope/paracord',
-                'Camping table (optional)'
-            ],
-            'COMFORT STATION & HYGIENE': [
-                'Toilet paper & hand sanitizer',
-                'Soap & shampoo',
-                'Toothbrush & toothpaste',
-                'Deodorant',
+            'Toiletries': [
+                'Toothbrush & toothpaste', 'Deodorant', 'Personal medications',
+                'Lip balm with SPF', 'Towel (quick-dry)', 'Shower shoes',
                 'Feminine hygiene products (if needed)',
-                'Medications (personal)',
-                'Sunscreen',
-                'Lip balm with SPF',
-                'Bug spray',
-                'Wet wipes',
-                'Towel (quick-dry)',
-                'Shower shoes'
             ],
-            'FIRST AID & SAFETY': [
-                'First aid kit (bandages, gauze, antiseptic)',
-                'Pain relief (ibuprofen, acetaminophen)',
-                'Anti-itch cream (mosquito/poison ivy)',
-                'Thermometer',
-                'Emergency phone numbers',
-                'Whistle',
-                'Matches (waterproof)',
-                'Flashlight (backup)'
+            'Nice to Have': [
+                'Camera / phone for photos', 'Books / magazines',
+                'Binoculars', 'Sketchpad & colored pencils',
             ],
-            'FUN & ACTIVITIES': [
-                'Board games/cards',
-                'Portable speaker',
-                'Books/magazines',
-                'Binoculars (birdwatching)',
-                'Fishing rod (if interested)',
-                'Sports (frisbee, badminton)',
-                'Sketchpad & colored pencils',
-                'Camera/phone for photos'
-            ]
         };
 
         const guides = [
@@ -1459,6 +1531,7 @@
         let firebaseReady = false;
         let currentRoles = {};
         let currentChecklist = {};
+        let currentCommunal = {};
         let currentComments = [];
         let currentMealItems = {};
 
@@ -1676,56 +1749,128 @@
         // ============================================
         // CHECKLIST
         // ============================================
+        function communalKey(cat, item) {
+            return (cat + '-' + item).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        }
+
         function renderChecklist() {
             const container = document.getElementById('checklistContainer');
             container.innerHTML = '';
 
-            Object.entries(checklistItems).forEach(([category, items]) => {
-                const group = document.createElement('div');
-                group.className = 'checklist-group';
+            // ── Section 1: Per Tent ──
+            const tentHeader = document.createElement('div');
+            tentHeader.className = 'checklist-section-header';
+            tentHeader.innerHTML = `<div class="checklist-section-title">⛺ Per Tent</div><div class="checklist-section-desc">Each tent checks off its own gear. 3 tents total.</div>`;
+            container.appendChild(tentHeader);
 
-                const title = document.createElement('div');
-                title.className = 'checklist-group-title';
-                title.textContent = category;
-                group.appendChild(title);
+            const tentGrid = document.createElement('div');
+            tentGrid.className = 'tent-grid';
 
-                const itemsDiv = document.createElement('div');
-                itemsDiv.className = 'checklist-items';
+            tents.forEach(tent => {
+                const card = document.createElement('div');
+                card.className = 'tent-card';
+                card.innerHTML = `<div class="tent-card-header">${tent.label}</div>`;
 
-                items.forEach(item => {
-                    const itemKey = `${category}|${item}`;
+                let currentSub = null;
+                tentChecklistItems.forEach(item => {
+                    if (item.sub !== currentSub) {
+                        currentSub = item.sub;
+                        const subEl = document.createElement('div');
+                        subEl.className = 'tent-subcategory';
+                        subEl.textContent = item.sub;
+                        card.appendChild(subEl);
+                    }
+                    const itemKey = `${tent.id}|${item.key}`;
                     const data = currentChecklist[itemKey] || {};
                     const isChecked = data.checked || false;
                     const checkedBy = data.checkedBy || '';
                     const timestamp = data.timestamp || '';
 
-                    const itemDiv = document.createElement('div');
-                    itemDiv.className = `checklist-item ${isChecked ? 'checked' : ''}`;
+                    const row = document.createElement('div');
+                    row.className = `tent-item${isChecked ? ' checked' : ''}`;
 
                     let infoHTML = '';
                     if (isChecked && checkedBy) {
                         const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                        infoHTML = `<div class="checklist-item-info">✓ ${checkedBy} — ${time}</div>`;
+                        infoHTML = `<span class="tent-item-info">✓ ${checkedBy} — ${time}</span>`;
                     }
 
-                    itemDiv.innerHTML = `
+                    row.innerHTML = `
                         <input type="checkbox" ${isChecked ? 'checked' : ''} data-item-key="${itemKey}">
-                        <div class="checklist-item-content">
-                            <label class="checklist-item-label">${item}</label>
+                        <div class="tent-item-content">
+                            <label class="tent-item-label">${item.label}</label>
                             ${infoHTML}
                         </div>
                     `;
-
-                    itemsDiv.appendChild(itemDiv);
+                    card.appendChild(row);
                 });
+                tentGrid.appendChild(card);
+            });
+            container.appendChild(tentGrid);
 
-                group.appendChild(itemsDiv);
+            // ── Section 2: Communal ──
+            const communalHeader = document.createElement('div');
+            communalHeader.className = 'checklist-section-header';
+            communalHeader.innerHTML = `<div class="checklist-section-title">🤝 Communal Items</div><div class="checklist-section-desc">Up to 3 people can claim "I'm bringing this." Click again to unclaim.</div>`;
+            container.appendChild(communalHeader);
+
+            Object.entries(communalChecklistItems).forEach(([cat, items]) => {
+                const group = document.createElement('div');
+                group.className = 'communal-group';
+                group.innerHTML = `<div class="communal-group-title">${cat}</div>`;
+                const list = document.createElement('div');
+                list.className = 'communal-items-list';
+
+                items.forEach(item => {
+                    const docId = communalKey(cat, item);
+                    const claimants = currentCommunal[docId] || [];
+                    const isMine = claimants.includes(currentUser);
+                    const isFull = claimants.length >= 3;
+
+                    const pillsHTML = claimants.map(n => `<span class="communal-claim-pill">${n}</span>`).join('');
+
+                    let btnLabel, btnClass, btnDisabled;
+                    if (isMine)       { btnLabel = 'Unclaim'; btnClass = 'communal-btn unclaim'; btnDisabled = false; }
+                    else if (isFull)  { btnLabel = 'Full';    btnClass = 'communal-btn';         btnDisabled = true; }
+                    else              { btnLabel = 'Bring It';btnClass = 'communal-btn';         btnDisabled = false; }
+
+                    const row = document.createElement('div');
+                    row.className = 'communal-item';
+                    row.innerHTML = `
+                        <div class="communal-item-left">
+                            <span class="communal-item-name">${item}</span>
+                            <div class="communal-claimants">${pillsHTML}</div>
+                        </div>
+                        <button class="${btnClass}" data-doc-id="${docId}" data-cat="${cat}" data-item="${item}" data-unclaim="${isMine}" ${btnDisabled ? 'disabled' : ''}>${btnLabel}</button>
+                    `;
+                    list.appendChild(row);
+                });
+                group.appendChild(list);
+                container.appendChild(group);
+            });
+
+            // ── Section 3: Personal ──
+            const personalHeader = document.createElement('div');
+            personalHeader.className = 'checklist-section-header';
+            personalHeader.innerHTML = `<div class="checklist-section-title">🎒 Personal Items</div><div class="checklist-section-desc">Everyone is responsible for their own. Use this as a packing reference.</div>`;
+            container.appendChild(personalHeader);
+
+            const priorityClasses = { 'Must Have': 'must-have', 'Toiletries': 'toiletries', 'Nice to Have': 'nice-to-have' };
+            Object.entries(personalChecklistItems).forEach(([priority, items]) => {
+                const group = document.createElement('div');
+                group.className = 'personal-group';
+                const cls = priorityClasses[priority] || 'must-have';
+                group.innerHTML = `<span class="personal-priority-badge ${cls}">${priority}</span>
+                    <div class="personal-tags">${items.map(i => `<span class="personal-tag">${i}</span>`).join('')}</div>`;
                 container.appendChild(group);
             });
 
             // Attach listeners
-            document.querySelectorAll('.checklist-item input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', toggleChecklistItem);
+            container.querySelectorAll('.tent-item input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', toggleChecklistItem);
+            });
+            container.querySelectorAll('.communal-btn:not(:disabled)').forEach(btn => {
+                btn.addEventListener('click', toggleCommunalItem);
             });
         }
 
@@ -1735,28 +1880,37 @@
                 e.target.checked = !e.target.checked;
                 return;
             }
-
             const itemKey = e.target.dataset.itemKey;
             const isChecked = e.target.checked;
-
-            if (!firebaseReady) {
-                alert('Firebase is not ready.');
-                e.target.checked = !e.target.checked;
-                return;
-            }
-
+            if (!firebaseReady) { e.target.checked = !e.target.checked; return; }
             try {
-                const docId = itemKey.replace(/[|]/g, '_');
+                const docId = itemKey.replace(/\|/g, '_');
                 await db.collection('checklist').doc(docId).set({
-                    itemKey: itemKey,
+                    itemKey,
                     checked: isChecked,
                     checkedBy: isChecked ? currentUser : '',
                     timestamp: isChecked ? new Date() : null
                 });
-                loadChecklist();
             } catch (error) {
                 console.error('Error updating checklist:', error);
                 e.target.checked = !e.target.checked;
+            }
+        }
+
+        async function toggleCommunalItem(e) {
+            if (!currentUser) { alert('Please select your name first!'); return; }
+            if (!firebaseReady) return;
+            const { docId, cat, item, unclaim } = e.target.dataset;
+            const isUnclaim = unclaim === 'true';
+            try {
+                const ref = db.collection('communal').doc(docId);
+                if (isUnclaim) {
+                    await ref.update({ claimedBy: firebase.firestore.FieldValue.arrayRemove(currentUser) });
+                } else {
+                    await ref.set({ item, category: cat, claimedBy: firebase.firestore.FieldValue.arrayUnion(currentUser) }, { merge: true });
+                }
+            } catch (error) {
+                console.error('Error updating communal item:', error);
             }
         }
 
@@ -1776,6 +1930,21 @@
                 renderChecklist();
             } catch (error) {
                 console.error('Error loading checklist:', error);
+            }
+        }
+
+        async function loadCommunal() {
+            if (!firebaseReady) return;
+            try {
+                const snapshot = await db.collection('communal').get();
+                currentCommunal = {};
+                snapshot.forEach(doc => {
+                    const raw = doc.data().claimedBy;
+                    currentCommunal[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+                });
+                renderChecklist();
+            } catch (error) {
+                console.error('Error loading communal items:', error);
             }
         }
 
@@ -1931,12 +2100,14 @@
                     loadRoles();
                     loadMealItems();
                     loadChecklist();
+                    loadCommunal();
                     loadComments();
 
                     // Real-time listeners
                     db.collection('roles').onSnapshot(() => { loadRoles(); });
                     db.collection('meal_items').onSnapshot(() => { loadMealItems(); });
                     db.collection('checklist').onSnapshot(() => { loadChecklist(); });
+                    db.collection('communal').onSnapshot(() => { loadCommunal(); });
                     db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(() => { loadComments(); });
                 }).catch((error) => {
                     console.error('Firebase error:', error);
