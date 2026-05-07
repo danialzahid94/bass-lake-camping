@@ -1047,6 +1047,131 @@
             font-size: 0.9rem;
             margin-top: 0.5rem;
         }
+
+        /* Countdown */
+        .trip-countdown {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.15);
+            display: inline-block;
+            padding: 0.6rem 1.75rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Weather Section */
+        #weather {
+            background: linear-gradient(135deg, #eaf4ff, #f2f8ff) !important;
+            border-bottom: 2px solid #c8def5;
+        }
+        .weather-subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: -0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .weather-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.75rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 40, 0.08);
+            border-top: 4px solid var(--green-light);
+        }
+        .weather-card.main-day {
+            border-top-color: var(--orange-light);
+            box-shadow: 0 6px 18px rgba(200, 100, 0, 0.12);
+        }
+        .weather-day-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 0.2rem;
+        }
+        .weather-day-name {
+            font-weight: 700;
+            color: var(--green-dark);
+            font-size: 1rem;
+            margin-bottom: 0.15rem;
+        }
+        .weather-day-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .weather-icon {
+            font-size: 2.75rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+        .weather-desc {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .weather-temps {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 1.25rem;
+            margin-bottom: 0.85rem;
+        }
+        .weather-high {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--orange-dark);
+            line-height: 1;
+        }
+        .weather-low {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #5a8fc0;
+            line-height: 1;
+        }
+        .weather-precip {
+            font-size: 0.82rem;
+            padding: 0.25rem 0.9rem;
+            border-radius: 20px;
+            display: inline-block;
+            background: #f0f8ff;
+            font-weight: 600;
+        }
+        .weather-loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            font-style: italic;
+        }
+        .weather-error {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #c0392b;
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+        .weather-footer {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .weather-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1063,6 +1188,7 @@
                 <a href="#checklist">Checklist</a>
                 <a href="#guide">Guide</a>
                 <a href="#comments">Chat</a>
+                <a href="#weather">Weather</a>
             </nav>
             <div class="name-picker-container">
                 <span class="name-picker-label">You:</span>
@@ -1088,6 +1214,17 @@
         <span class="emoji">🏕️</span>
         <p class="subtitle">May 16–17, 2026 | Bass Lake Provincial Park</p>
         <p class="tagline">2 Campsites | 4 Tents | 1 Night | 1 Epic Time</p>
+        <div id="tripCountdown" class="trip-countdown"></div>
+    </section>
+
+    <!-- Weather Forecast -->
+    <section id="weather">
+        <h2>🌤️ Trip Weekend Forecast</h2>
+        <p class="weather-subtitle">Live weather for Bass Lake, Orillia — updates every hour</p>
+        <div id="weatherGrid" class="weather-grid">
+            <div class="weather-loading">Fetching forecast...</div>
+        </div>
+        <p id="weatherFooter" class="weather-footer"></p>
     </section>
 
     <!-- Trip Overview -->
@@ -1949,6 +2086,123 @@
         }
 
         // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+        function updateCountdown() {
+            const el = document.getElementById('tripCountdown');
+            if (!el) return;
+            const tripDate = new Date('2026-05-16T09:30:00-04:00');
+            const now = new Date();
+            const diff = tripDate - now;
+            if (diff <= 0) {
+                el.textContent = '🔥 We\'re at Bass Lake right now!';
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            el.innerHTML = `⏳ <strong>${days}</strong>d <strong>${hours}</strong>h <strong>${mins}</strong>m until we hit the road!`;
+            setTimeout(updateCountdown, 30000);
+        }
+
+        // ============================================
+        // WEATHER WIDGET
+        // ============================================
+        const WMO = {
+            0:  ['Clear sky', '☀️'],
+            1:  ['Mainly clear', '🌤️'],
+            2:  ['Partly cloudy', '⛅'],
+            3:  ['Overcast', '☁️'],
+            45: ['Foggy', '🌫️'],
+            48: ['Icy fog', '🌫️'],
+            51: ['Light drizzle', '🌦️'],
+            53: ['Drizzle', '🌦️'],
+            55: ['Heavy drizzle', '🌦️'],
+            61: ['Light rain', '🌧️'],
+            63: ['Rain', '🌧️'],
+            65: ['Heavy rain', '🌧️'],
+            71: ['Light snow', '🌨️'],
+            73: ['Snow', '🌨️'],
+            75: ['Heavy snow', '❄️'],
+            80: ['Light showers', '🌦️'],
+            81: ['Rain showers', '🌦️'],
+            82: ['Heavy showers', '⛈️'],
+            95: ['Thunderstorm', '⛈️'],
+            96: ['Thunderstorm + hail', '⛈️'],
+            99: ['Severe thunderstorm', '⛈️'],
+        };
+
+        async function fetchWeather() {
+            const CACHE_KEY = 'bass_lake_weather_v1';
+            const TTL = 60 * 60 * 1000;
+            try {
+                const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+                if (cached && Date.now() - cached.ts < TTL) {
+                    renderWeather(cached.data);
+                    return;
+                }
+            } catch(e) {}
+            try {
+                const url = 'https://api.open-meteo.com/v1/forecast?' +
+                    'latitude=44.85&longitude=-79.4' +
+                    '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code' +
+                    '&timezone=America%2FToronto' +
+                    '&start_date=2026-05-15&end_date=2026-05-17' +
+                    '&forecast_days=16';
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
+                renderWeather(data);
+            } catch(e) {
+                const grid = document.getElementById('weatherGrid');
+                if (grid) grid.innerHTML = '<div class="weather-error">Weather forecast unavailable. <a href="#" onclick="event.preventDefault();fetchWeather()">Retry</a></div>';
+                console.error('Weather error:', e);
+            }
+        }
+
+        function renderWeather(data) {
+            const grid = document.getElementById('weatherGrid');
+            const footer = document.getElementById('weatherFooter');
+            if (!grid || !data?.daily) return;
+
+            const days = [
+                { label: 'Fri — Travel Day', name: 'Friday', date: 'May 15', cls: '' },
+                { label: 'Sat — Camp Day ⛺', name: 'Saturday', date: 'May 16', cls: 'main-day' },
+                { label: 'Sun — Departure', name: 'Sunday', date: 'May 17', cls: '' },
+            ];
+
+            grid.innerHTML = days.map((d, i) => {
+                const maxC = Math.round(data.daily.temperature_2m_max[i]);
+                const minC = Math.round(data.daily.temperature_2m_min[i]);
+                const precip = data.daily.precipitation_probability_max[i];
+                const code = data.daily.weather_code[i];
+                const [desc, icon] = WMO[code] || ['Unknown', '🌡️'];
+                const precipColor = precip > 60 ? '#c0392b' : precip > 30 ? '#e67e22' : '#27ae60';
+                const precipEmoji = precip > 50 ? '🌧️ ' : precip > 20 ? '💧 ' : '';
+                return `
+                    <div class="weather-card ${d.cls}">
+                        <div class="weather-day-label">${d.label}</div>
+                        <div class="weather-day-name">${d.name}</div>
+                        <div class="weather-day-date">${d.date}</div>
+                        <span class="weather-icon">${icon}</span>
+                        <div class="weather-desc">${desc}</div>
+                        <div class="weather-temps">
+                            <div class="weather-high">${maxC}°</div>
+                            <div class="weather-low">${minC}°</div>
+                        </div>
+                        <div class="weather-precip" style="color:${precipColor}">${precipEmoji}${precip}% rain</div>
+                    </div>`;
+            }).join('');
+
+            if (footer) {
+                const now = new Date();
+                footer.textContent = `Updated ${now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · Source: Open-Meteo · Forecast accuracy improves closer to the trip`;
+            }
+            setTimeout(fetchWeather, 60 * 60 * 1000);
+        }
+
+        // ============================================
         // ACCORDION
         // ============================================
         function renderAccordion() {
@@ -2134,6 +2388,8 @@
         // INIT
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
+            updateCountdown();
+            fetchWeather();
             renderAccordion();
             initializeFirebase();
 
