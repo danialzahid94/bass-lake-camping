@@ -2133,7 +2133,7 @@
         };
 
         async function fetchWeather() {
-            const CACHE_KEY = 'bass_lake_weather_v1';
+            const CACHE_KEY = 'bass_lake_weather_v2';
             const TTL = 60 * 60 * 1000;
             try {
                 const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
@@ -2147,8 +2147,7 @@
                     'latitude=44.85&longitude=-79.4' +
                     '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code' +
                     '&timezone=America%2FToronto' +
-                    '&start_date=2026-05-15&end_date=2026-05-17' +
-                    '&forecast_days=16';
+                    '&start_date=2026-05-15&end_date=2026-05-17';
                 const res = await fetch(url);
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
