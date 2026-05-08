@@ -164,7 +164,7 @@
         /* Hero Section */
         #hero {
             text-align: center;
-            padding: 6rem 2rem;
+            padding: 3rem 2rem;
             background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
             color: var(--cream-light);
         }
@@ -1059,120 +1059,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* Weather Section */
-        #weather {
-            background: linear-gradient(135deg, #eaf4ff, #f2f8ff) !important;
-            border-bottom: 2px solid #c8def5;
-        }
-        .weather-subtitle {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            margin-top: -0.75rem;
-            margin-bottom: 0.5rem;
-        }
-        .weather-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .weather-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.75rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 40, 0.08);
-            border-top: 4px solid var(--green-light);
-        }
-        .weather-card.main-day {
-            border-top-color: var(--orange-light);
-            box-shadow: 0 6px 18px rgba(200, 100, 0, 0.12);
-        }
-        .weather-day-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-light);
-            margin-bottom: 0.2rem;
-        }
-        .weather-day-name {
-            font-weight: 700;
-            color: var(--green-dark);
-            font-size: 1rem;
-            margin-bottom: 0.15rem;
-        }
-        .weather-day-date {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-        .weather-icon {
-            font-size: 2.75rem;
-            display: block;
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-        .weather-desc {
-            font-size: 0.88rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-        .weather-temps {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 1.25rem;
-            margin-bottom: 0.85rem;
-        }
-        .weather-high {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--orange-dark);
-            line-height: 1;
-        }
-        .weather-low {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #5a8fc0;
-            line-height: 1;
-        }
-        .weather-precip {
-            font-size: 0.82rem;
-            padding: 0.25rem 0.9rem;
-            border-radius: 20px;
-            display: inline-block;
-            background: #f0f8ff;
-            font-weight: 600;
-        }
-        .weather-loading {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: var(--text-light);
-            padding: 2rem;
-            font-style: italic;
-        }
-        .weather-error {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #c0392b;
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-        .weather-footer {
-            text-align: center;
-            font-size: 0.78rem;
-            color: var(--text-light);
-            margin-top: 1rem;
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 768px) {
-            .weather-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* Who's Bringing What */
         .summary-grid {
             display: grid;
@@ -1272,15 +1158,14 @@
             <div class="logo">🏕️ Bass Lake 2026</div>
             <nav>
                 <a href="#overview">Overview</a>
-                <a href="#reminders">Reminders</a>
-                <a href="#timeline">Timeline</a>
+                <a href="#summary">Summary</a>
                 <a href="#meals">Meals</a>
                 <a href="#roles">Roles</a>
-                <a href="#summary">Summary</a>
-                <a href="#checklist">Checklist</a>
+                <a href="#checklist">Gear</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#reminders">Reminders</a>
                 <a href="#guide">Guide</a>
                 <a href="#comments">Chat</a>
-                <a href="#weather">Weather</a>
             </nav>
             <div class="name-picker-container">
                 <span class="name-picker-label">You:</span>
@@ -1309,18 +1194,8 @@
         <div id="tripCountdown" class="trip-countdown"></div>
     </section>
 
-    <!-- Weather Forecast -->
-    <section id="weather">
-        <h2>🌤️ Trip Weekend Forecast</h2>
-        <p class="weather-subtitle">Live weather for Bass Lake, Orillia — updates every hour</p>
-        <div id="weatherGrid" class="weather-grid">
-            <div class="weather-loading">Fetching forecast...</div>
-        </div>
-        <p id="weatherFooter" class="weather-footer"></p>
-    </section>
-
     <!-- Trip Overview -->
-    <section id="overview">
+    <section id="overview" style="padding: 2rem 2rem">
         <h2>Trip Overview</h2>
         <div class="overview-grid">
             <div class="info-box">
@@ -1349,46 +1224,44 @@
             </div>
         </div>
     </section>
-
-    <!-- Important Reminders -->
-    <section id="reminders">
-        <h2>⚠️ Important Reminders</h2>
-        <div class="reminder-cards">
-            <div class="reminder">
-                <div class="reminder-title">🌙 Quiet Hours</div>
-                <div class="reminder-content">11 PM to 7 AM — Keep voices low and music off. Fines possible for violations.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🐻 Food Storage</div>
-                <div class="reminder-content">NEVER store food in tents — raccoons and bears. Keep all food in cars or bear-proof containers.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🔥 Fire Safety</div>
-                <div class="reminder-content">Campfires must be fully extinguished before leaving or sleeping. Use water, not dirt.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🚿 Comfort Stations</div>
-                <div class="reminder-content">Flush toilets, hot showers, laundry available. Bring quarters for laundry machines.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">❄️ May Weather</div>
-                <div class="reminder-content">Daytime 15–20°C, nighttime 3–5°C. Bring warm layers, especially for evenings.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">📱 Cell Reception</div>
-                <div class="reminder-content">Spotty signal at camp. Download offline maps and emergency contacts before arriving.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🐕 Dogs</div>
-                <div class="reminder-content">Dogs allowed on leash, NOT permitted on beaches. Keep them with you at all times.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">✅ Check-in/Out</div>
-                <div class="reminder-content">Check-in: 2 PM | Check-out: 2 PM Sunday. Aim to arrive by 11–12 PM Saturday — early arrival is fine, no gatehouse check-in needed.</div>
+    <!-- Who's Bringing What -->
+    <section id="summary">
+        <h2>📋 Who's Bringing What</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Everything each person has committed to — roles, gear, and meal contributions. Select your name above to highlight your card.</p>
+        <div id="summaryGrid" class="summary-grid">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+    <!-- Meal Plan -->
+    <section id="meals">
+        <h2>🍽️ Meal Plan</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Select your name above, then add what you're bringing to each meal. Click × next to your own items to remove them.</p>
+        <div class="meal-cards" id="mealsContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+        <div class="card mt-2">
+            <div class="card-title">🛒 Grocery Tips</div>
+            <div class="card-content">
+                <p>Buy perishables Friday or Saturday morning before leaving Milton. Pack coolers with ice carefully — keep raw meat away from ready-to-eat food. Bring extra ice for drinks. Label food with names if shared. Don't forget condiments, oils, salt, pepper!</p>
             </div>
         </div>
     </section>
-
+    <!-- Role Assignments -->
+    <section id="roles">
+        <h2>👥 Role Assignments</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Up to 3 people can share a role. Everyone will see updates in real-time.</p>
+        <div class="roles-grid" id="rolesContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+    <!-- Gear Checklist -->
+    <section id="checklist">
+        <h2>✅ Gear Checklist</h2>
+        <p style="margin-bottom: 0.5rem; color: var(--text-light);">Three sections: per-tent gear to check off, communal items to claim (max 3 per item), and a personal packing reference.</p>
+        <div class="checklist-groups" id="checklistContainer">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
     <!-- Trip Timeline -->
     <section id="timeline">
         <h2>🗓️ Trip Timeline</h2>
@@ -1525,48 +1398,51 @@
 
         </div>
     </section>
-
-    <!-- Meal Plan -->
-    <section id="meals">
-        <h2>🍽️ Meal Plan</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Select your name above, then add what you're bringing to each meal. Click × next to your own items to remove them.</p>
-        <div class="meal-cards" id="mealsContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-        <div class="card mt-2">
-            <div class="card-title">🛒 Grocery Tips</div>
-            <div class="card-content">
-                <p>Buy perishables Friday or Saturday morning before leaving Milton. Pack coolers with ice carefully — keep raw meat away from ready-to-eat food. Bring extra ice for drinks. Label food with names if shared. Don't forget condiments, oils, salt, pepper!</p>
+    <!-- Important Reminders -->
+    <section id="reminders">
+        <h2>⚠️ Important Reminders</h2>
+        <div class="reminder-cards">
+            <div class="reminder">
+                <div class="reminder-title">🌙 Quiet Hours</div>
+                <div class="reminder-content">11 PM to 7 AM — Keep voices low and music off. Fines possible for violations.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🐻 Food Storage</div>
+                <div class="reminder-content">NEVER store food in tents — raccoons and bears. Keep all food in cars or bear-proof containers.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🔥 Fire Safety</div>
+                <div class="reminder-content">Campfires must be fully extinguished before leaving or sleeping. Use water, not dirt.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🚿 Comfort Stations</div>
+                <div class="reminder-content">Flush toilets, hot showers, laundry available. Bring quarters for laundry machines.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">❄️ May Weather</div>
+                <div class="reminder-content">Daytime 15–20°C, nighttime 3–5°C. Bring warm layers, especially for evenings.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">📱 Cell Reception</div>
+                <div class="reminder-content">Spotty signal at camp. Download offline maps and emergency contacts before arriving.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">🐕 Dogs</div>
+                <div class="reminder-content">Dogs allowed on leash, NOT permitted on beaches. Keep them with you at all times.</div>
+            </div>
+            <div class="reminder">
+                <div class="reminder-title">✅ Check-in/Out</div>
+                <div class="reminder-content">Check-in: 2 PM | Check-out: 2 PM Sunday. Aim to arrive by 11–12 PM Saturday — early arrival is fine, no gatehouse check-in needed.</div>
             </div>
         </div>
     </section>
 
-    <!-- Role Assignments -->
-    <section id="roles">
-        <h2>👥 Role Assignments</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Up to 3 people can share a role. Everyone will see updates in real-time.</p>
-        <div class="roles-grid" id="rolesContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
 
-    <!-- Who's Bringing What -->
-    <section id="summary">
-        <h2>📋 Who's Bringing What</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Everything each person has committed to — roles, gear, and meal contributions. Select your name above to highlight your card.</p>
-        <div id="summaryGrid" class="summary-grid">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
 
-    <!-- Gear Checklist -->
-    <section id="checklist">
-        <h2>✅ Gear Checklist</h2>
-        <p style="margin-bottom: 0.5rem; color: var(--text-light);">Three sections: per-tent gear to check off, communal items to claim (max 3 per item), and a personal packing reference.</p>
-        <div class="checklist-groups" id="checklistContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
+
+
+
+
 
     <!-- First-Timer's Guide -->
     <section id="guide">
@@ -2277,100 +2153,25 @@
             setTimeout(updateCountdown, 30000);
         }
 
+
         // ============================================
-        // WEATHER WIDGET
+        // COUNTDOWN TIMER
         // ============================================
-        const WMO = {
-            0:  ['Clear sky', '☀️'],
-            1:  ['Mainly clear', '🌤️'],
-            2:  ['Partly cloudy', '⛅'],
-            3:  ['Overcast', '☁️'],
-            45: ['Foggy', '🌫️'],
-            48: ['Icy fog', '🌫️'],
-            51: ['Light drizzle', '🌦️'],
-            53: ['Drizzle', '🌦️'],
-            55: ['Heavy drizzle', '🌦️'],
-            61: ['Light rain', '🌧️'],
-            63: ['Rain', '🌧️'],
-            65: ['Heavy rain', '🌧️'],
-            71: ['Light snow', '🌨️'],
-            73: ['Snow', '🌨️'],
-            75: ['Heavy snow', '❄️'],
-            80: ['Light showers', '🌦️'],
-            81: ['Rain showers', '🌦️'],
-            82: ['Heavy showers', '⛈️'],
-            95: ['Thunderstorm', '⛈️'],
-            96: ['Thunderstorm + hail', '⛈️'],
-            99: ['Severe thunderstorm', '⛈️'],
-        };
-
-        async function fetchWeather() {
-            const CACHE_KEY = 'bass_lake_weather_v2';
-            const TTL = 60 * 60 * 1000;
-            try {
-                const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-                if (cached && Date.now() - cached.ts < TTL) {
-                    renderWeather(cached.data);
-                    return;
-                }
-            } catch(e) {}
-            try {
-                const url = 'https://api.open-meteo.com/v1/forecast?' +
-                    'latitude=44.85&longitude=-79.4' +
-                    '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code' +
-                    '&timezone=America%2FToronto' +
-                    '&start_date=2026-05-15&end_date=2026-05-17';
-                const res = await fetch(url);
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
-                try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
-                renderWeather(data);
-            } catch(e) {
-                const grid = document.getElementById('weatherGrid');
-                if (grid) grid.innerHTML = '<div class="weather-error">Weather forecast unavailable. <a href="#" onclick="event.preventDefault();fetchWeather()">Retry</a></div>';
-                console.error('Weather error:', e);
+        function updateCountdown() {
+            const el = document.getElementById('tripCountdown');
+            if (!el) return;
+            const tripDate = new Date('2026-05-16T09:30:00-04:00');
+            const now = new Date();
+            const diff = tripDate - now;
+            if (diff <= 0) {
+                el.textContent = '🔥 We\'re at Bass Lake right now!';
+                return;
             }
-        }
-
-        function renderWeather(data) {
-            const grid = document.getElementById('weatherGrid');
-            const footer = document.getElementById('weatherFooter');
-            if (!grid || !data?.daily) return;
-
-            const days = [
-                { label: 'Fri — Travel Day', name: 'Friday', date: 'May 15', cls: '' },
-                { label: 'Sat — Camp Day ⛺', name: 'Saturday', date: 'May 16', cls: 'main-day' },
-                { label: 'Sun — Departure', name: 'Sunday', date: 'May 17', cls: '' },
-            ];
-
-            grid.innerHTML = days.map((d, i) => {
-                const maxC = Math.round(data.daily.temperature_2m_max[i]);
-                const minC = Math.round(data.daily.temperature_2m_min[i]);
-                const precip = data.daily.precipitation_probability_max[i];
-                const code = data.daily.weather_code[i];
-                const [desc, icon] = WMO[code] || ['Unknown', '🌡️'];
-                const precipColor = precip > 60 ? '#c0392b' : precip > 30 ? '#e67e22' : '#27ae60';
-                const precipEmoji = precip > 50 ? '🌧️ ' : precip > 20 ? '💧 ' : '';
-                return `
-                    <div class="weather-card ${d.cls}">
-                        <div class="weather-day-label">${d.label}</div>
-                        <div class="weather-day-name">${d.name}</div>
-                        <div class="weather-day-date">${d.date}</div>
-                        <span class="weather-icon">${icon}</span>
-                        <div class="weather-desc">${desc}</div>
-                        <div class="weather-temps">
-                            <div class="weather-high">${maxC}°</div>
-                            <div class="weather-low">${minC}°</div>
-                        </div>
-                        <div class="weather-precip" style="color:${precipColor}">${precipEmoji}${precip}% rain</div>
-                    </div>`;
-            }).join('');
-
-            if (footer) {
-                const now = new Date();
-                footer.textContent = `Updated ${now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · Source: Open-Meteo · Forecast accuracy improves closer to the trip`;
-            }
-            setTimeout(fetchWeather, 60 * 60 * 1000);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            el.innerHTML = `⏳ <strong>${days}</strong>d <strong>${hours}</strong>h <strong>${mins}</strong>m until we hit the road!`;
+            setTimeout(updateCountdown, 30000);
         }
 
         // ============================================
@@ -2560,7 +2361,6 @@
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
             updateCountdown();
-            fetchWeather();
             renderAccordion();
             initializeFirebase();
 
