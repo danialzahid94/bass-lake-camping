@@ -1172,6 +1172,97 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Who's Bringing What */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.25rem;
+        }
+        .summary-card {
+            background: white;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: box-shadow 0.2s;
+        }
+        .summary-card.is-me {
+            border-color: var(--orange-light);
+            box-shadow: 0 4px 16px rgba(232, 130, 12, 0.22);
+        }
+        .summary-card-header {
+            background: var(--green-dark);
+            color: white;
+            padding: 0.7rem 1rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .summary-card.is-me .summary-card-header {
+            background: var(--orange-dark);
+        }
+        .summary-you-badge {
+            font-size: 0.68rem;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 0.15rem 0.55rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .summary-card-body {
+            padding: 0.9rem 1rem 1rem;
+        }
+        .summary-group-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-light);
+            margin: 0.8rem 0 0.35rem;
+        }
+        .summary-group-label:first-child {
+            margin-top: 0;
+        }
+        .summary-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .summary-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+        }
+        .summary-tag.role {
+            background: #edf7ed;
+            color: #1e6b1e;
+            border: 1px solid #b8ddb8;
+        }
+        .summary-tag.gear {
+            background: #fff8e1;
+            color: #7a5200;
+            border: 1px solid #ffe082;
+        }
+        .summary-tag.meal {
+            background: #fff3e0;
+            color: #8b4500;
+            border: 1px solid #ffcc80;
+        }
+        .summary-empty-line {
+            color: #ccc;
+            font-style: italic;
+            font-size: 0.8rem;
+        }
+        .summary-nothing {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -1185,6 +1276,7 @@
                 <a href="#timeline">Timeline</a>
                 <a href="#meals">Meals</a>
                 <a href="#roles">Roles</a>
+                <a href="#summary">Summary</a>
                 <a href="#checklist">Checklist</a>
                 <a href="#guide">Guide</a>
                 <a href="#comments">Chat</a>
@@ -1458,6 +1550,15 @@
         </div>
     </section>
 
+    <!-- Who's Bringing What -->
+    <section id="summary">
+        <h2>📋 Who's Bringing What</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Everything each person has committed to — roles, gear, and meal contributions. Select your name above to highlight your card.</p>
+        <div id="summaryGrid" class="summary-grid">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
     <!-- Gear Checklist -->
     <section id="checklist">
         <h2>✅ Gear Checklist</h2>
@@ -1690,7 +1791,7 @@
         namePicker.addEventListener('change', async (e) => {
             currentUser = e.target.value;
             localStorage.setItem('campingUser', currentUser);
-            console.log('Selected user:', currentUser);
+            renderSummary();
         });
 
         // ============================================
@@ -1786,6 +1887,7 @@
                     currentMealItems[d.mealId].push({ id: doc.id, text: d.text, addedBy: d.addedBy });
                 });
                 renderMeals();
+                renderSummary();
             } catch (error) {
                 console.error('Error loading meal items:', error);
                 renderMeals();
@@ -1878,6 +1980,7 @@
                     currentRoles[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
                 });
                 renderRoles();
+                renderSummary();
             } catch (error) {
                 console.error('Error loading roles:', error);
             }
@@ -2080,9 +2183,78 @@
                     currentCommunal[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
                 });
                 renderChecklist();
+                renderSummary();
             } catch (error) {
                 console.error('Error loading communal items:', error);
             }
+        }
+
+        // ============================================
+        // WHO'S BRINGING WHAT
+        // ============================================
+        function renderSummary() {
+            const grid = document.getElementById('summaryGrid');
+            if (!grid) return;
+
+            const allPeople = ['Danial', 'Izza', 'Saif', 'Sania', 'Mohid', 'Nida', 'Eshal', 'Iman', 'Alina'];
+
+            const cards = allPeople.map(person => {
+                const isMe = person === currentUser;
+
+                // Roles this person has claimed
+                const personRoles = roles.filter(r => (currentRoles[r.id] || []).includes(person));
+
+                // Communal gear they're bringing
+                const personGear = [];
+                Object.entries(communalChecklistItems).forEach(([cat, items]) => {
+                    items.forEach(item => {
+                        if ((currentCommunal[communalKey(cat, item)] || []).includes(person)) {
+                            personGear.push(item);
+                        }
+                    });
+                });
+
+                // Meal items they've added
+                const personMeals = [];
+                Object.entries(currentMealItems).forEach(([mealId, items]) => {
+                    items.forEach(mi => {
+                        if (mi.addedBy === person) {
+                            const slot = mealSlots.find(s => s.id === mealId);
+                            personMeals.push(`${mi.text} <span style="opacity:0.65;font-size:0.72rem">(${slot ? slot.label : mealId})</span>`);
+                        }
+                    });
+                });
+
+                const rolesHTML = personRoles.length
+                    ? personRoles.map(r => `<span class="summary-tag role">${r.name}</span>`).join('')
+                    : '<span class="summary-empty-line">None</span>';
+
+                const gearHTML = personGear.length
+                    ? personGear.map(g => `<span class="summary-tag gear">${g}</span>`).join('')
+                    : '<span class="summary-empty-line">None</span>';
+
+                const mealsHTML = personMeals.length
+                    ? personMeals.map(m => `<span class="summary-tag meal">${m}</span>`).join('')
+                    : '<span class="summary-empty-line">None</span>';
+
+                return `
+                    <div class="summary-card${isMe ? ' is-me' : ''}">
+                        <div class="summary-card-header">
+                            <span>👤 ${person}</span>
+                            ${isMe ? '<span class="summary-you-badge">You</span>' : ''}
+                        </div>
+                        <div class="summary-card-body">
+                            <div class="summary-group-label">🎯 Roles (${personRoles.length})</div>
+                            <div class="summary-tags">${rolesHTML}</div>
+                            <div class="summary-group-label">🎒 Bringing (${personGear.length} items)</div>
+                            <div class="summary-tags">${gearHTML}</div>
+                            <div class="summary-group-label">🍽️ Meal contributions (${personMeals.length})</div>
+                            <div class="summary-tags">${mealsHTML}</div>
+                        </div>
+                    </div>`;
+            });
+
+            grid.innerHTML = cards.join('');
         }
 
         // ============================================
