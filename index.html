@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bass Lake Camping Trip 2026</title>
-
-    <!-- Firebase SDK (v9+ compat mode) -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <title>The Camping Checklist — Pack Everything You Need</title>
+    <meta name="description" content="A free, printable camping checklist covering essentials, kids' gear, cold weather and hot weather packing lists. Check items off as you pack — your progress saves right in your browser.">
+    <meta property="og:title" content="The Camping Checklist">
+    <meta property="og:description" content="Everything you need to pack for your next camping trip, organized so you never forget the essentials.">
+    <meta property="og:type" content="website">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%95%EF%B8%8F%3C/text%3E%3C/svg%3E">
 
     <style>
         * {
@@ -56,23 +57,25 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .logo {
             color: var(--cream-light);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-decoration: none;
         }
 
         nav {
             display: flex;
-            gap: 1rem;
+            gap: 0.25rem;
             flex-wrap: wrap;
             justify-content: center;
-            flex: 1;
         }
 
         nav a {
@@ -88,44 +91,6 @@
         nav a:hover {
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-        }
-
-
-        .name-picker-container {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .name-picker-label {
-            color: var(--cream-light);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        #namePicker {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 4px;
-            background-color: var(--cream-light);
-            color: var(--green-dark);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        #namePicker:hover {
-            background-color: var(--orange-light);
-            color: white;
-        }
-
-        #namePicker:focus {
-            outline: 2px solid var(--orange-light);
-            outline-offset: 2px;
         }
 
         /* Sections */
@@ -149,1005 +114,286 @@
         h2 {
             font-size: 2.2rem;
             color: var(--green-dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--orange-light);
             display: inline-block;
         }
 
-        h3 {
-            font-size: 1.3rem;
-            color: var(--brown-dark);
-            margin-bottom: 0.8rem;
+        .section-intro {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin: 1rem 0 2rem;
+            max-width: 700px;
         }
 
         /* Hero Section */
         #hero {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 3.5rem 2rem 2.5rem;
             background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-light) 100%);
             color: var(--cream-light);
         }
 
         #hero h1 {
             color: var(--cream-light);
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             margin-bottom: 0.5rem;
         }
 
         #hero .emoji {
             font-size: 3rem;
             display: block;
-            margin: 1rem 0;
+            margin: 0.5rem 0;
         }
 
         #hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
             opacity: 0.95;
         }
 
         #hero .tagline {
-            font-size: 1.1rem;
-            font-style: italic;
+            font-size: 1rem;
             opacity: 0.85;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Cards */
-        .card {
-            background-color: white;
-            border-left: 4px solid var(--orange-light);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        /* Toolbar (progress + actions) */
+        #toolbar {
+            padding: 1.75rem 2rem;
         }
 
-        .card:hover {
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--brown-dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .card-content {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* Overview Grid */
-        .overview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .info-box {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-top: 4px solid var(--green-light);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-box h4 {
-            color: var(--green-dark);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .info-box p {
-            color: var(--text-dark);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        /* Reminders */
-        .reminder-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        .toolbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
             gap: 1.5rem;
-            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
-        .reminder {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 5px solid var(--orange-light);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .reminder-title {
-            font-weight: 700;
-            color: var(--orange-dark);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .reminder-content {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding: 1rem 0;
-        }
-
-        .timeline-day {
-            margin-bottom: 3rem;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        }
-
-        .timeline-day-header {
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .timeline-day-header.friday {
-            background: linear-gradient(135deg, #3d6b22, #5a8f35);
-        }
-
-        .timeline-day-header.saturday {
-            background: linear-gradient(135deg, #b85c00, #e07a1a);
-        }
-
-        .timeline-day-header.sunday {
-            background: linear-gradient(135deg, #2a5298, #4a7abf);
-        }
-
-        .timeline-day-icon {
-            font-size: 2.5rem;
-            line-height: 1;
-        }
-
-        .timeline-day-title {
-            font-size: 1.4rem;
-            color: white;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .timeline-day-subtitle {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.82);
-            margin-top: 0.2rem;
-            font-style: italic;
-        }
-
-        .timeline-items {
-            background: #fdfaf4;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .timeline-item {
-            display: flex;
-            gap: 1rem;
-            padding: 0.9rem 1.1rem;
-            background-color: white;
-            border-radius: 10px;
-            border-left: 4px solid var(--green-light);
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            align-items: flex-start;
-        }
-
-        .timeline-item.travel  { border-left-color: #7aab3f; }
-        .timeline-item.meal    { border-left-color: #e07a1a; }
-        .timeline-item.activity{ border-left-color: #4a9abf; }
-        .timeline-item.fire    { border-left-color: #d44f0a; }
-        .timeline-item.sleep   { border-left-color: #7a6a9a; }
-        .timeline-item.admin   { border-left-color: #9aaa5a; }
-
-        .timeline-item.highlight {
-            background: linear-gradient(135deg, #fff8ed, #fff0d0);
-            border-left-color: #e05a00;
-            box-shadow: 0 2px 8px rgba(200,100,0,0.13);
-        }
-
-        .timeline-time {
-            min-width: 72px;
-            font-weight: 700;
-            color: var(--orange-dark);
-            font-size: 0.88rem;
-            padding-top: 0.1rem;
-            flex-shrink: 0;
-        }
-
-        .timeline-emoji {
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            padding-top: 0.05rem;
-        }
-
-        .timeline-content {
+        .progress-wrap {
             flex: 1;
-            color: var(--text-light);
-            font-size: 0.97rem;
+            min-width: 220px;
         }
 
-        .timeline-content strong {
-            color: var(--text-dark);
-        }
-
-        /* Meal Plan */
-        .meal-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .meal-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-top: 4px solid var(--orange-light);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .meal-time {
-            font-weight: 700;
-            color: var(--brown-dark);
-            margin-bottom: 0.5rem;
+        .progress-label {
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .meal-items {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .meal-item-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.35rem 0;
-            border-bottom: 1px solid #f0ead0;
-        }
-
-        .meal-item-row:last-child {
-            border-bottom: none;
-        }
-
-        .meal-remove-btn {
-            background: none;
-            border: none;
-            color: #c0392b;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 0 0.3rem;
-            opacity: 0.5;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-
-        .meal-remove-btn:hover { opacity: 1; }
-
-        .meal-empty {
-            color: #bbb;
-            font-style: italic;
-            font-size: 0.88rem;
-            padding: 0.4rem 0;
-        }
-
-        .meal-add-row {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.9rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid #f0ead0;
-        }
-
-        .meal-input {
-            flex: 1;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 0.4rem 0.7rem;
-            font-size: 0.88rem;
-            background: #fdf8ef;
-            font-family: inherit;
-        }
-
-        .meal-input:focus { outline: none; border-color: var(--orange-light); }
-
-        .meal-add-btn {
-            background: var(--green-light);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 0.4rem 0.85rem;
-            cursor: pointer;
-            font-size: 0.85rem;
             font-weight: 600;
+            color: var(--brown-dark);
+            margin-bottom: 0.4rem;
+        }
+
+        .progress-track {
+            background: #ecdfc0;
+            border-radius: 20px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--green-light), var(--orange-light));
+            height: 100%;
+            width: 0%;
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.65rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
             white-space: nowrap;
         }
 
-        .meal-add-btn:hover { background: var(--green-dark); }
+        .btn-primary {
+            background: var(--orange-light);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); }
 
-        /* Role Assignments */
-        .roles-grid {
+        .btn-secondary {
+            background: white;
+            color: var(--brown-dark);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover { background: var(--cream-dark); }
+
+        /* Checklist grid (Essentials — multiple group cards) */
+        .checklist-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin-top: 2rem;
         }
 
-        .role-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 5px solid var(--green-light);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-
-        .role-name {
-            font-weight: 700;
-            color: var(--green-dark);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .role-description {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .role-claimants {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-
-        .role-claim-pill {
-            background-color: var(--green-light);
-            color: white;
-            padding: 0.3rem 0.85rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.82rem;
-        }
-
-        .role-slots {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.75rem;
-        }
-
-        .claim-button {
-            background-color: var(--orange-light);
-            color: white;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .claim-button:hover {
-            background-color: var(--orange-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(212, 107, 8, 0.3);
-        }
-
-        .claim-button:disabled {
-            background-color: #999;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .claim-button.unclaim {
-            background-color: #888;
-        }
-
-        .claim-button.unclaim:hover {
-            background-color: #666;
-            box-shadow: none;
-        }
-
-        /* Checklist — Section Headers */
-        .checklist-section-header {
-            margin: 2.5rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--orange-light);
-        }
-        .checklist-section-header:first-child { margin-top: 1rem; }
-        .checklist-section-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--green-dark);
-        }
-        .checklist-section-desc {
-            font-size: 0.88rem;
-            color: var(--text-light);
-            margin-top: 0.2rem;
-        }
-
-        /* Per Tent */
-        .tent-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-            margin-top: 1rem;
-        }
-        .tent-card {
+        .checklist-card {
             background: white;
             border-radius: 10px;
             border-top: 4px solid var(--green-light);
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
         }
-        .tent-card-header {
+
+        .checklist-card-header {
             background: var(--green-dark);
             color: white;
-            padding: 0.65rem 1rem;
+            padding: 0.75rem 1rem;
             font-weight: 700;
             font-size: 0.95rem;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
         }
-        .tent-subcategory {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-light);
-            padding: 0.6rem 0.85rem 0.3rem;
+
+        .checklist-card-count {
+            font-weight: 400;
+            opacity: 0.85;
+            font-size: 0.8rem;
+            flex-shrink: 0;
         }
-        .tent-item {
+
+        /* Single wide card (Kids / Cold / Hot / Other sections) */
+        .checklist-card.wide .check-list {
+            columns: 2;
+            column-gap: 1.5rem;
+            padding: 0.5rem 1rem 0.75rem;
+        }
+
+        @media (max-width: 640px) {
+            .checklist-card.wide .check-list {
+                columns: 1;
+            }
+        }
+
+        .check-list {
+            padding: 0.25rem 0 0.25rem;
+        }
+
+        .check-item {
             display: flex;
             align-items: flex-start;
             gap: 0.6rem;
-            padding: 0.5rem 0.85rem;
+            padding: 0.55rem 1rem;
             border-bottom: 1px solid #f5f0e8;
+            cursor: pointer;
+            break-inside: avoid;
         }
-        .tent-item:last-child { border-bottom: none; }
-        .tent-item.checked { background: #f0f9f0; }
-        .tent-item input[type="checkbox"] {
-            width: 16px; height: 16px;
+        .checklist-card.wide .check-item {
+            padding: 0.4rem 0;
+            border-bottom: none;
+        }
+        .check-item:last-child { border-bottom: none; }
+        .check-item:hover { background: #faf7ee; }
+        .checklist-card.wide .check-item:hover { background: transparent; }
+
+        .check-item input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
             accent-color: var(--green-light);
             cursor: pointer;
             flex-shrink: 0;
             margin-top: 0.15rem;
         }
-        .tent-item-content { flex: 1; }
-        .tent-item-label {
-            font-size: 0.88rem;
+
+        .check-item span {
+            font-size: 0.92rem;
             color: var(--text-dark);
-            cursor: pointer;
-            display: block;
         }
-        .tent-item.checked .tent-item-label {
+
+        .check-item.checked span {
             text-decoration: line-through;
             color: var(--text-light);
-        }
-        .tent-item-info {
-            font-size: 0.72rem;
-            color: var(--text-light);
-            margin-top: 0.1rem;
+            opacity: 0.75;
         }
 
-        /* Communal */
-        .communal-group { margin-bottom: 1.75rem; }
-        .communal-group-title {
-            font-weight: 700;
-            color: var(--brown-dark);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.6rem;
-        }
-        .communal-items-list { display: flex; flex-direction: column; gap: 0.45rem; }
-        .communal-item {
+        /* Section header row with live count badge */
+        .section-heading-row {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.55rem 0.9rem;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            gap: 0.75rem;
-        }
-        .communal-item-left { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
-        .communal-item-name { font-size: 0.9rem; color: var(--text-dark); }
-        .communal-claimants { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-        .communal-claim-pill {
-            background: var(--green-light);
-            color: white;
-            padding: 0.1rem 0.55rem;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-        .communal-btn {
-            background: var(--green-light);
-            color: white;
-            border: none;
-            padding: 0.3rem 0.7rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.78rem;
-            font-weight: 600;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-        .communal-btn:hover { background: var(--green-dark); }
-        .communal-btn.unclaim { background: #999; }
-        .communal-btn.unclaim:hover { background: #777; }
-        .communal-btn:disabled { background: #ccc; cursor: not-allowed; }
-
-        /* Personal */
-        .personal-group { margin-bottom: 1.5rem; }
-        .personal-priority-badge {
-            display: inline-block;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.65rem;
-        }
-        .personal-priority-badge.must-have  { background: #ffebee; color: #c62828; }
-        .personal-priority-badge.toiletries { background: #e8f5e9; color: #2e7d32; }
-        .personal-priority-badge.nice-to-have { background: #e3f2fd; color: #1565c0; }
-        .personal-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .personal-tag {
-            background: white;
-            border: 1px solid var(--border-color);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            color: var(--text-dark);
-        }
-
-        /* Accordion */
-        .accordion-item {
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            overflow: hidden;
-            background-color: white;
-        }
-
-        .accordion-header {
-            padding: 1rem;
-            background-color: var(--cream-dark);
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--green-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        .accordion-header:hover {
-            background-color: var(--brown-light);
-            color: white;
-        }
-
-        .accordion-header.active {
-            background-color: var(--green-light);
-            color: white;
-        }
-
-        .accordion-toggle {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-header.active .accordion-toggle {
-            transform: rotate(180deg);
-        }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            padding: 0 1rem;
-        }
-
-        .accordion-content.active {
-            max-height: 500px;
-            padding: 1rem;
-        }
-
-        .accordion-content p {
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-        }
-
-        .accordion-content ol, .accordion-content ul {
-            margin-left: 1.5rem;
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        .accordion-content li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Comments Section */
-        .comments-container {
-            max-width: 600px;
-            margin-top: 2rem;
-        }
-
-        .comment-input-group {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
+            align-items: baseline;
+            gap: 0.85rem;
             flex-wrap: wrap;
         }
 
-        .comment-input-group input {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.8rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.95rem;
-        }
-
-        .comment-input-group button {
-            padding: 0.8rem 1.5rem;
-            background-color: var(--orange-light);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+        .section-count-badge {
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            color: var(--brown-dark);
+            background: var(--cream-dark);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
         }
 
-        .comment-input-group button:hover {
-            background-color: var(--orange-dark);
-            transform: translateY(-2px);
-        }
-
-        .comments-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .comment {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 6px;
-            border-left: 4px solid var(--green-light);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .comment-name {
-            font-weight: 700;
-            color: var(--green-dark);
-            font-size: 0.95rem;
-        }
-
-        .comment-timestamp {
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-
-        .comment-text {
-            color: var(--text-light);
-            line-height: 1.5;
-            word-break: break-word;
-        }
-
-        /* Emergency Info Footer */
+        /* Footer */
         footer {
             background-color: var(--green-dark);
             color: var(--cream-light);
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            color: var(--orange-light);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
-        .footer-section p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
-
-        .footer-divider {
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 2rem;
+            padding: 2.5rem 2rem;
             margin-top: 2rem;
             text-align: center;
+        }
+
+        footer p {
             font-size: 0.9rem;
-            opacity: 0.8;
+            opacity: 0.85;
+            margin-top: 0.5rem;
         }
 
-        /* Loading Indicator */
-        .loading {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--green-light);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        footer .footer-tagline {
+            font-size: 1.05rem;
+            opacity: 0.95;
+            font-weight: 600;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.6rem; }
+            #hero h1 { font-size: 2.3rem; }
+            #hero .emoji { font-size: 2.3rem; }
+            header { padding: 0.6rem 1rem; }
+            nav { display: none; }
+            section { padding: 2.5rem 1.25rem; }
+            #toolbar { padding: 1.25rem; }
+            .toolbar-inner { flex-direction: column; align-items: stretch; }
+            .toolbar-actions { justify-content: stretch; }
+            .toolbar-actions .btn { flex: 1; }
+        }
 
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            #hero h1 {
-                font-size: 2.5rem;
-            }
-
-            #hero .emoji {
-                font-size: 2.5rem;
-            }
-
-            header {
-                padding: 0.6rem 1rem;
-            }
-
-            nav {
-                display: none;
-            }
-
+        /* Print styles */
+        @media print {
+            header, #toolbar, footer { display: none; }
+            html { scroll-behavior: auto; }
             section {
-                padding: 2rem 1rem;
+                padding: 0.5rem 0;
+                max-width: 100%;
             }
-
-            .timeline-day {
-                margin-bottom: 1.5rem;
-                border-radius: 12px;
+            section:nth-child(even) { background: none; }
+            #hero {
+                background: none;
+                color: var(--text-dark);
+                padding: 0 0 1rem;
             }
-
-            .timeline-day-header {
-                padding: 1rem;
-                gap: 0.75rem;
-            }
-
-            .timeline-day-icon {
-                font-size: 1.8rem;
-            }
-
-            .timeline-day-title {
-                font-size: 1.1rem;
-            }
-
-            .timeline-day-subtitle {
-                font-size: 0.8rem;
-            }
-
-            .timeline-items {
-                padding: 0.75rem;
-                gap: 0.5rem;
-            }
-
-            .timeline-item {
-                flex-wrap: wrap;
-                padding: 0.7rem 0.85rem;
-                gap: 0.4rem 0.75rem;
-            }
-
-            .timeline-time {
-                min-width: auto;
-                font-size: 0.8rem;
-            }
-
-            .timeline-emoji {
-                font-size: 1rem;
-            }
-
-            .timeline-content {
-                width: 100%;
-                font-size: 0.9rem;
-            }
-
-            .tent-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .communal-item {
-                flex-wrap: wrap;
-            }
-
-            .comment-input-group {
-                flex-direction: column;
-            }
-        }
-
-        /* Utility Classes */
-        .text-center {
-            text-align: center;
-        }
-
-        .mt-2 {
-            margin-top: 2rem;
-        }
-
-        .mb-2 {
-            margin-bottom: 2rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .error {
-            color: #d32f2f;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .success {
-            color: var(--green-light);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Countdown */
-        .trip-countdown {
-            margin-top: 1.5rem;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.15);
-            display: inline-block;
-            padding: 0.6rem 1.75rem;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        /* Who's Bringing What */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-            gap: 1.25rem;
-        }
-        .summary-card {
-            background: white;
-            border-radius: 10px;
-            border: 2px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: box-shadow 0.2s;
-        }
-        .summary-card.is-me {
-            border-color: var(--orange-light);
-            box-shadow: 0 4px 16px rgba(232, 130, 12, 0.22);
-        }
-        .summary-card-header {
-            background: var(--green-dark);
-            color: white;
-            padding: 0.7rem 1rem;
-            font-weight: 700;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .summary-card.is-me .summary-card-header {
-            background: var(--orange-dark);
-        }
-        .summary-you-badge {
-            font-size: 0.68rem;
-            background: rgba(255, 255, 255, 0.25);
-            padding: 0.15rem 0.55rem;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-        .summary-card-body {
-            padding: 0.9rem 1rem 1rem;
-        }
-        .summary-group-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            color: var(--text-light);
-            margin: 0.8rem 0 0.35rem;
-        }
-        .summary-group-label:first-child {
-            margin-top: 0;
-        }
-        .summary-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-        .summary-tag {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.78rem;
-        }
-        .summary-tag.role {
-            background: #edf7ed;
-            color: #1e6b1e;
-            border: 1px solid #b8ddb8;
-        }
-        .summary-tag.gear {
-            background: #fff8e1;
-            color: #7a5200;
-            border: 1px solid #ffe082;
-        }
-        .summary-tag.meal {
-            background: #fff3e0;
-            color: #8b4500;
-            border: 1px solid #ffcc80;
-        }
-        .summary-empty-line {
-            color: #ccc;
-            font-style: italic;
-            font-size: 0.8rem;
-        }
-        .summary-nothing {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: var(--text-light);
-            padding: 2rem;
-            font-style: italic;
+            #hero h1 { color: var(--green-dark); }
+            .checklist-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .checklist-card, .checklist-card.wide .check-list { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+            .checklist-card.wide .check-list { columns: 1; }
+            section { page-break-inside: avoid; }
         }
     </style>
 </head>
@@ -1155,1223 +401,421 @@
     <!-- Header -->
     <header>
         <div class="header-row">
-            <div class="logo">🏕️ Bass Lake 2026</div>
+            <a href="#hero" class="logo">🏕️ Camping Checklist</a>
             <nav>
-                <a href="#overview">Overview</a>
-                <a href="#summary">Summary</a>
-                <a href="#meals">Meals</a>
-                <a href="#roles">Roles</a>
-                <a href="#checklist">Gear</a>
-                <a href="#timeline">Timeline</a>
-                <a href="#reminders">Reminders</a>
-                <a href="#guide">Guide</a>
-                <a href="#comments">Chat</a>
+                <a href="#essentials">Essentials</a>
+                <a href="#kids">Kids</a>
+                <a href="#cold-weather">Cold Weather</a>
+                <a href="#hot-weather">Hot Weather</a>
+                <a href="#other">Other Items</a>
             </nav>
-            <div class="name-picker-container">
-                <span class="name-picker-label">You:</span>
-                <select id="namePicker">
-                <option value="">Select your name</option>
-                <option value="Danial">Danial</option>
-                <option value="Izza">Izza</option>
-                <option value="Saif">Saif</option>
-                <option value="Sania">Sania</option>
-                <option value="Mohid">Mohid</option>
-                <option value="Nida">Nida</option>
-                <option value="Eshal">Eshal</option>
-                <option value="Iman">Iman</option>
-                <option value="Alina">Alina</option>
-            </select>
-            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section id="hero">
-        <h1>Bass Lake Camping Trip</h1>
+        <h1>The Camping Checklist</h1>
         <span class="emoji">🏕️</span>
-        <p class="subtitle">May 16–17, 2026 | Bass Lake Provincial Park</p>
-        <p class="tagline">2 Campsites | 4 Tents | 1 Night | 1 Epic Time</p>
-        <div id="tripCountdown" class="trip-countdown"></div>
+        <p class="subtitle">Everything you need to pack for your next camping trip</p>
+        <p class="tagline">Organized into essentials, kids' gear, and weather-specific packing lists — so nothing gets left behind. Check items off as you pack; your progress saves automatically in this browser.</p>
     </section>
 
-    <!-- Trip Overview -->
-    <section id="overview" style="padding: 2rem 2rem">
-        <h2>Trip Overview</h2>
-        <div class="overview-grid">
-            <div class="info-box">
-                <h4>📍 Location</h4>
-                <p>Bass Lake Provincial Park, Orillia, Ontario</p>
+    <!-- Toolbar: progress + actions -->
+    <section id="toolbar" style="background-color: var(--cream-dark);">
+        <div class="toolbar-inner">
+            <div class="progress-wrap">
+                <div class="progress-label" id="progressLabel">0 of 0 items packed</div>
+                <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
             </div>
-            <div class="info-box">
-                <h4>📅 Dates</h4>
-                <p>Saturday, May 16 — Sunday, May 17, 2026</p>
-            </div>
-            <div class="info-box">
-                <h4>🗺️ Distance</h4>
-                <p>~1.5 hours (140 km via Hwy 400) from Milton</p>
-            </div>
-            <div class="info-box">
-                <h4>⛺ Campsites</h4>
-                <p>2 booked sites for our group</p>
-            </div>
-        </div>
-
-        <div class="card mt-2">
-            <div class="card-title">Our Group Distribution</div>
-            <div class="card-content">
-                <p><strong>Campsite 132:</strong> Saif, Sania, Eshal, Iman & Alina</p>
-                <p style="margin-top: 0.5rem;"><strong>Campsite 133:</strong> Danial, Izza, Aslan, Nida & Mohid</p>
-            </div>
-        </div>
-    </section>
-    <!-- Who's Bringing What -->
-    <section id="summary">
-        <h2>📋 Who's Bringing What</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Everything each person has committed to — roles, gear, and meal contributions. Select your name above to highlight your card.</p>
-        <div id="summaryGrid" class="summary-grid">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
-    <!-- Meal Plan -->
-    <section id="meals">
-        <h2>🍽️ Meal Plan</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Select your name above, then add what you're bringing to each meal. Click × next to your own items to remove them.</p>
-        <div class="meal-cards" id="mealsContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-        <div class="card mt-2">
-            <div class="card-title">🛒 Grocery Tips</div>
-            <div class="card-content">
-                <p>Buy perishables Friday or Saturday morning before leaving Milton. Pack coolers with ice carefully — keep raw meat away from ready-to-eat food. Bring extra ice for drinks. Label food with names if shared. Don't forget condiments, oils, salt, pepper!</p>
-            </div>
-        </div>
-    </section>
-    <!-- Role Assignments -->
-    <section id="roles">
-        <h2>👥 Role Assignments</h2>
-        <p style="margin-bottom: 1.5rem; color: var(--text-light);">Click "Claim" to take on a role. Up to 3 people can share a role. Everyone will see updates in real-time.</p>
-        <div class="roles-grid" id="rolesContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
-    <!-- Gear Checklist -->
-    <section id="checklist">
-        <h2>✅ Gear Checklist</h2>
-        <p style="margin-bottom: 0.5rem; color: var(--text-light);">Three sections: per-tent gear to check off, communal items to claim (max 3 per item), and a personal packing reference.</p>
-        <div class="checklist-groups" id="checklistContainer">
-            <!-- Populated by JavaScript -->
-        </div>
-    </section>
-    <!-- Trip Timeline -->
-    <section id="timeline">
-        <h2>🗓️ Trip Timeline</h2>
-        <div class="timeline">
-
-            <!-- FRIDAY -->
-            <div class="timeline-day">
-                <div class="timeline-day-header friday">
-                    <div class="timeline-day-icon">🚗</div>
-                    <div>
-                        <div class="timeline-day-title">Friday, May 15</div>
-                        <div class="timeline-day-subtitle">Ottawa crew rolls in — the adventure begins tonight</div>
-                    </div>
-                </div>
-                <div class="timeline-items">
-                    <div class="timeline-item travel">
-                        <div class="timeline-time">Evening</div>
-                        <div class="timeline-emoji">🛣️</div>
-                        <div class="timeline-content"><strong>Ottawa Group Arrives in Milton</strong> — Saif, Sania, Eshal, Iman & Alina make the drive down. The whole crew is finally together.</div>
-                    </div>
-                    <div class="timeline-item admin">
-                        <div class="timeline-time">Night</div>
-                        <div class="timeline-emoji">🎒</div>
-                        <div class="timeline-content"><strong>Pack Cars & Get Ready</strong> — Load the coolers, stack the gear, run the checklist. Everything goes in the car tonight so Saturday morning is smooth.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SATURDAY -->
-            <div class="timeline-day">
-                <div class="timeline-day-header saturday">
-                    <div class="timeline-day-icon">⛺</div>
-                    <div>
-                        <div class="timeline-day-title">Saturday, May 16</div>
-                        <div class="timeline-day-subtitle">The main event — Bass Lake awaits</div>
-                    </div>
-                </div>
-                <div class="timeline-items">
-                    <div class="timeline-item sleep">
-                        <div class="timeline-time">8:00 AM</div>
-                        <div class="timeline-emoji">⏰</div>
-                        <div class="timeline-content"><strong>Wake Up Call</strong> — Rise and shine, campers. Today's the day.</div>
-                    </div>
-                    <div class="timeline-item meal">
-                        <div class="timeline-time">8:30 AM</div>
-                        <div class="timeline-emoji">🍳</div>
-                        <div class="timeline-content"><strong>Breakfast</strong> — Fuel up in Milton before the drive.</div>
-                    </div>
-                    <div class="timeline-item admin">
-                        <div class="timeline-time">9:00 AM</div>
-                        <div class="timeline-emoji">✅</div>
-                        <div class="timeline-content"><strong>Final Items Check</strong> — Last look around, load up the cars. Nothing gets left behind.</div>
-                    </div>
-                    <div class="timeline-item travel">
-                        <div class="timeline-time">9:30 AM</div>
-                        <div class="timeline-emoji">🚙</div>
-                        <div class="timeline-content"><strong>Hit the Road!</strong> — ~1.5 hrs to Bass Lake via Hwy 400. Windows down, good music on.</div>
-                    </div>
-                    <div class="timeline-item travel highlight">
-                        <div class="timeline-time">11:30 AM</div>
-                        <div class="timeline-emoji">🌲</div>
-                        <div class="timeline-content"><strong>We're Here!</strong> — Show the barcode from the confirmation email at the gate, grab your car pass, and head straight to campsites 132 & 133. If the previous campers are still around, hit the lake until they clear out.</div>
-                    </div>
-                    <div class="timeline-item admin">
-                        <div class="timeline-time">12:00 PM</div>
-                        <div class="timeline-emoji">🏕️</div>
-                        <div class="timeline-content"><strong>Set Up Camp</strong> — Tents first, always. Then chairs, tarp, cooking station. Make it home.</div>
-                    </div>
-                    <div class="timeline-item meal">
-                        <div class="timeline-time">2:00 PM</div>
-                        <div class="timeline-emoji">🥙</div>
-                        <div class="timeline-content"><strong>Lunch + Light the Fire</strong> — Eat, relax, get the campfire going. The vibe starts here.</div>
-                    </div>
-                    <div class="timeline-item activity highlight">
-                        <div class="timeline-time">2:00–6:00 PM</div>
-                        <div class="timeline-emoji">🏊</div>
-                        <div class="timeline-content"><strong>Open Choice — Your Afternoon to Own</strong> — Swimming at the lake, hiking the trails, hammocking at camp, board games, napping in the sun. Do what you want.</div>
-                    </div>
-                    <div class="timeline-item meal">
-                        <div class="timeline-time">6:30 PM</div>
-                        <div class="timeline-emoji">🍖</div>
-                        <div class="timeline-content"><strong>Dinner Time</strong> — BBQ's fired up. Burgers, hot dogs, sides — eat together under the trees.</div>
-                    </div>
-                    <div class="timeline-item fire highlight">
-                        <div class="timeline-time">8:30 PM</div>
-                        <div class="timeline-emoji">🔥</div>
-                        <div class="timeline-content"><strong>Bonfire + Karaoke Night</strong> — Popcorn and marshmallows on the fire, and yes — karaoke under the stars. This is the one.</div>
-                    </div>
-                    <div class="timeline-item sleep">
-                        <div class="timeline-time">11:00 PM</div>
-                        <div class="timeline-emoji">🌙</div>
-                        <div class="timeline-content"><strong>Wind Down</strong> — Put out the fire, secure the food in the cars, and head to your tents. Big day deserves good sleep.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SUNDAY -->
-            <div class="timeline-day">
-                <div class="timeline-day-header sunday">
-                    <div class="timeline-day-icon">🌅</div>
-                    <div>
-                        <div class="timeline-day-title">Sunday, May 17</div>
-                        <div class="timeline-day-subtitle">One last morning in the wild — make it count</div>
-                    </div>
-                </div>
-                <div class="timeline-items">
-                    <div class="timeline-item sleep">
-                        <div class="timeline-time">8:00 AM</div>
-                        <div class="timeline-emoji">☀️</div>
-                        <div class="timeline-content"><strong>Wake Up Call</strong> — Morning in the woods hits different. Coffee, fresh air, take it slow.</div>
-                    </div>
-                    <div class="timeline-item meal">
-                        <div class="timeline-time">8:30 AM</div>
-                        <div class="timeline-emoji">🍳</div>
-                        <div class="timeline-content"><strong>Breakfast</strong> — Last meal at camp. Enjoy it.</div>
-                    </div>
-                    <div class="timeline-item activity highlight">
-                        <div class="timeline-time">9:00–1:00 PM</div>
-                        <div class="timeline-emoji">🥾</div>
-                        <div class="timeline-content"><strong>Open Activities</strong> — Hike, hit the beach one more time, or just sit by the water and soak it all in. No rush.</div>
-                    </div>
-                    <div class="timeline-item admin">
-                        <div class="timeline-time">1:00 PM</div>
-                        <div class="timeline-emoji">🧹</div>
-                        <div class="timeline-content"><strong>Pack Up & Clean Up</strong> — Break down tents, clean both campsites. Leave it better than we found it.</div>
-                    </div>
-                    <div class="timeline-item travel">
-                        <div class="timeline-time">2:00 PM</div>
-                        <div class="timeline-emoji">👋</div>
-                        <div class="timeline-content"><strong>Depart</strong> — Check out and hit the road. Until next time, Bass Lake.</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- Important Reminders -->
-    <section id="reminders">
-        <h2>⚠️ Important Reminders</h2>
-        <div class="reminder-cards">
-            <div class="reminder">
-                <div class="reminder-title">🌙 Quiet Hours</div>
-                <div class="reminder-content">11 PM to 7 AM — Keep voices low and music off. Fines possible for violations.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🐻 Food Storage</div>
-                <div class="reminder-content">NEVER store food in tents — raccoons and bears. Keep all food in cars or bear-proof containers.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🔥 Fire Safety</div>
-                <div class="reminder-content">Campfires must be fully extinguished before leaving or sleeping. Use water, not dirt.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🚿 Comfort Stations</div>
-                <div class="reminder-content">Flush toilets, hot showers, laundry available. Bring quarters for laundry machines.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">❄️ May Weather</div>
-                <div class="reminder-content">Daytime 15–20°C, nighttime 3–5°C. Bring warm layers, especially for evenings.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">📱 Cell Reception</div>
-                <div class="reminder-content">Spotty signal at camp. Download offline maps and emergency contacts before arriving.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">🐕 Dogs</div>
-                <div class="reminder-content">Dogs allowed on leash, NOT permitted on beaches. Keep them with you at all times.</div>
-            </div>
-            <div class="reminder">
-                <div class="reminder-title">✅ Check-in/Out</div>
-                <div class="reminder-content">Check-in: 2 PM | Check-out: 2 PM Sunday. Aim to arrive by 11–12 PM Saturday — early arrival is fine, no gatehouse check-in needed.</div>
+            <div class="toolbar-actions">
+                <button class="btn btn-secondary" id="printBtn">🖨️ Print Checklist</button>
+                <button class="btn btn-secondary" id="resetBtn">↺ Reset Checklist</button>
             </div>
         </div>
     </section>
 
-
-
-
-
-
-
-
-    <!-- First-Timer's Guide -->
-    <section id="guide">
-        <h2>🏔️ First-Timer's Guide</h2>
-        <div id="accordionContainer">
-            <!-- Populated by JavaScript -->
+    <!-- Essentials -->
+    <section id="essentials">
+        <div class="section-heading-row">
+            <h2>🎒 Essentials</h2>
+            <span class="section-count-badge" data-section-badge="essentials">0/0</span>
         </div>
+        <p class="section-intro">The core gear every camping trip needs, rain or shine.</p>
+        <div class="checklist-grid" data-section-container="essentials"></div>
     </section>
 
-    <!-- Comments / Chat -->
-    <section id="comments">
-        <h2>💬 Group Chat</h2>
-        <div class="comments-container">
-            <div class="comment-input-group">
-                <input type="text" id="commentInput" placeholder="Share a message with the group...">
-                <button id="postComment">Post</button>
-            </div>
-            <div class="comments-list" id="commentsList">
-                <!-- Populated by JavaScript -->
-            </div>
+    <!-- Kids -->
+    <section id="kids">
+        <div class="section-heading-row">
+            <h2>🧒 Essentials for Kids</h2>
+            <span class="section-count-badge" data-section-badge="kids">0/0</span>
         </div>
+        <p class="section-intro">Extra gear to keep the little campers fed, comfortable, and entertained.</p>
+        <div class="checklist-grid" data-section-container="kids"></div>
     </section>
 
-    <!-- Footer / Emergency Info -->
-    <footer id="footer">
-        <div class="footer-grid">
-            <div class="footer-section">
-                <h3>🏥 Emergency</h3>
-                <p><strong>Orillia Soldiers' Memorial Hospital</strong><br>
-                170 Colborne St W, Orillia<br>
-                ~20 minutes from Bass Lake</p>
-            </div>
-            <div class="footer-section">
-                <h3>🚨 In Case of Emergency</h3>
-                <p>Call 911 and notify park staff immediately.<br>
-                Have your campsite number ready.</p>
-            </div>
-            <div class="footer-section">
-                <h3>📞 Contact Info</h3>
-                <p><strong>Ontario Parks:</strong> 1-888-668-7275<br>
-                <strong>Park Store:</strong> Firewood, ice, basic supplies available.</p>
-            </div>
+    <!-- Cold Weather -->
+    <section id="cold-weather">
+        <div class="section-heading-row">
+            <h2>❄️ Essentials for Cold Weather</h2>
+            <span class="section-count-badge" data-section-badge="cold-weather">0/0</span>
         </div>
-        <div class="footer-divider">
-            <p>🏕️ Bass Lake Camping Trip 2026 | May 16–17 | Leave No Trace!</p>
+        <p class="section-intro">Stay warm when temperatures drop, especially overnight.</p>
+        <div class="checklist-grid" data-section-container="cold-weather"></div>
+    </section>
+
+    <!-- Hot Weather -->
+    <section id="hot-weather">
+        <div class="section-heading-row">
+            <h2>☀️ Essentials for Hot Weather</h2>
+            <span class="section-count-badge" data-section-badge="hot-weather">0/0</span>
         </div>
+        <p class="section-intro">Beat the heat and sun on scorching summer trips.</p>
+        <div class="checklist-grid" data-section-container="hot-weather"></div>
+    </section>
+
+    <!-- Other Items -->
+    <section id="other">
+        <div class="section-heading-row">
+            <h2>🎲 Other Items</h2>
+            <span class="section-count-badge" data-section-badge="other">0/0</span>
+        </div>
+        <p class="section-intro">Not essential, but they'll make the trip more fun and comfortable.</p>
+        <div class="checklist-grid" data-section-container="other"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-tagline">🌲 Leave No Trace — pack it in, pack it out.</p>
+        <p>Your checklist is saved locally in your browser only — nothing is uploaded or shared.</p>
+        <p>Happy camping!</p>
     </footer>
 
     <script>
         // ============================================
-        // FIREBASE CONFIGURATION (REPLACE WITH YOUR OWN)
-        // ============================================
-        const firebaseConfig = {
-            apiKey: "FIREBASE_API_KEY_PLACEHOLDER",
-            authDomain: "FIREBASE_AUTH_DOMAIN_PLACEHOLDER",
-            projectId: "FIREBASE_PROJECT_ID_PLACEHOLDER",
-            storageBucket: "FIREBASE_STORAGE_BUCKET_PLACEHOLDER",
-            messagingSenderId: "FIREBASE_MESSAGING_SENDER_ID_PLACEHOLDER",
-            appId: "FIREBASE_APP_ID_PLACEHOLDER"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // ============================================
         // DATA
         // ============================================
-        const roles = [
-            { id: 'coordinator', name: 'TRIP COORDINATOR', description: 'Overall trip organizer, timeline keeper', preassigned: 'Danial' },
-            { id: 'dinner-lead', name: 'FOOD LEAD — Dinner', description: 'Saturday dinner: BBQ, sides, coordination' },
-            { id: 'breakfast-lead', name: 'FOOD LEAD — Breakfast', description: 'Sunday breakfast: eggs, bacon, toast' },
-            { id: 'lunch-lead', name: 'FOOD LEAD — Lunch & Snacks', description: 'Sunday lunch, arrival snacks' },
-            { id: 'smores', name: 'S\'MORES & CAMPFIRE SNACKS', description: 'Saturday night: s\'mores, hot chocolate, chai' },
-            { id: 'firewood', name: 'FIREWOOD & FIRE MANAGEMENT', description: 'Procure, setup, maintain, extinguish campfire' },
-            { id: 'cooking-eq', name: 'COOKING EQUIPMENT', description: 'Camp stove, pans, utensils, griddle' },
-            { id: 'dishes', name: 'PLATES, CUPS & UTENSILS', description: 'Service ware, napkins, paper towels' },
-            { id: 'coolers', name: 'COOLERS & ICE', description: 'Pack, transport, manage coolers & ice' },
-            { id: 'first-aid', name: 'FIRST AID & SAFETY', description: 'First aid kit, emergency info, safety checks' },
-            { id: 'comfort', name: 'CAMPSITE COMFORT', description: 'Chairs, tarps, lanterns, firewood organization' },
-            { id: 'entertainment', name: 'ENTERTAINMENT', description: 'Games, music, activities, fun' },
-            { id: 'cleanup', name: 'CLEANUP CREW', description: 'After meals, final sweep. Everyone involved!' }
-        ];
-
-        const tents = [
-            { id: 'tent1', label: 'Tent 1', leader: 'Danial' },
-            { id: 'tent2', label: 'Tent 2', leader: 'Saif' },
-            { id: 'tent3', label: 'Tent 3', leader: 'Mohid' },
-        ];
-
-        const tentChecklistItems = [
-            { sub: 'Shelter', key: 'tent',   label: 'Tent' },
-            { sub: 'Shelter', key: 'tarp',   label: 'Tarp / Ground Sheet (optional)' },
-            { sub: 'Sleeping', key: 'sleeping-bag', label: 'Sleeping bag / Mattress' },
-            { sub: 'Sleeping', key: 'blankets',     label: 'Blankets / Quilts' },
-            { sub: 'Sleeping', key: 'pillows',      label: 'Pillows' },
-            { sub: 'Sleeping', key: 'light',        label: 'Light (lantern / headlamp)' },
-        ];
-
-        const communalChecklistItems = {
-            'Kitchen': [
-                'Camp stove & fuel', 'Propane canister', 'Large pots & pans',
-                'Griddle for eggs', 'Coolers (3–4)', 'Ice blocks',
-                'Cooking utensils (spatula, tongs, spoon)', 'Knife & cutting board',
-                'Aluminum foil', 'Cling wrap', 'Ziplock bags', 'Can opener',
-            ],
-            'Campsite': [
-                'Firewood', 'Fire starter (lighter, matches)',
-                'Folding camping chairs', 'Cooking area tarp',
-                'Rope / paracord', 'Camping table (optional)', 'Lantern',
-            ],
-            'Safety': [
-                'First aid kit', 'Pain relief (ibuprofen, acetaminophen)',
-                'Anti-itch cream', 'Thermometer', 'Waterproof matches', 'Whistle',
-            ],
-            'Shared Supplies': [
-                'Toilet paper & hand sanitizer', 'Soap & shampoo',
-                'Wet wipes', 'Bug spray', 'Sunscreen', 'Garbage bags',
-            ],
-            'Fun': [
-                'Board games / cards', 'Portable speaker',
-                'Sports gear (frisbee, badminton)', 'Fishing rod',
-            ],
-        };
-
-        const personalChecklistItems = {
-            'Must Have': [
-                'Warm layers / fleece', 'Rain jacket', 'Warm hat / toque', 'Gloves',
-                'Hiking boots / sturdy shoes', 'Swimsuit', 'Extra socks & underwear',
-                'Comfortable camp shoes',
-            ],
-            'Toiletries': [
-                'Toothbrush & toothpaste', 'Deodorant', 'Personal medications',
-                'Lip balm with SPF', 'Towel (quick-dry)', 'Shower shoes',
-                'Feminine hygiene products (if needed)',
-            ],
-            'Nice to Have': [
-                'Camera / phone for photos', 'Books / magazines',
-                'Binoculars', 'Sketchpad & colored pencils',
-            ],
-        };
-
-        const guides = [
+        const sections = [
             {
-                title: 'Setting Up Your Tent',
-                content: `
-                    <ol>
-                        <li><strong>Choose Your Spot:</strong> Find flat, dry ground away from the fire pit. Clear small rocks and sticks.</li>
-                        <li><strong>Lay the Foundation:</strong> Place the groundsheet/tarp. This keeps moisture out and protects the tent floor.</li>
-                        <li><strong>Assemble the Tent:</strong> Insert poles through sleeves, connect corners, and secure stakes into the ground at 45° angles.</li>
-                        <li><strong>Final Check:</strong> Ensure all guy lines are taut, stakes are secure, and zippers work smoothly. You're ready!</li>
-                    </ol>
-                `
+                id: 'essentials',
+                groups: [
+                    {
+                        name: 'Shelter & Sleep',
+                        icon: '⛺',
+                        items: [
+                            'Tent (with stakes, poles & guy lines)',
+                            'Rainfly or ground tarp',
+                            'Sleeping bag',
+                            'Sleeping pad or air mattress (+ pump if needed)',
+                            'Pillow',
+                            'Extra blanket',
+                        ]
+                    },
+                    {
+                        name: 'Kitchen & Food',
+                        icon: '🍳',
+                        items: [
+                            'Camp stove & fuel',
+                            'Lighter or waterproof matches',
+                            'Cooler & ice packs',
+                            'Pot & pan',
+                            'Cooking utensils (spatula, tongs, spoon)',
+                            'Plates, bowls & cups',
+                            'Cutlery',
+                            'Cutting board & knife',
+                            'Dish soap, sponge & quick-dry towel',
+                            'Trash bags',
+                            'Aluminum foil & ziplock bags',
+                            'Cooking oil, salt, pepper & condiments',
+                            'Drinking water or water filter',
+                        ]
+                    },
+                    {
+                        name: 'Fire',
+                        icon: '🔥',
+                        items: [
+                            'Firewood & kindling',
+                            'Fire starter (lighter, matches, tinder)',
+                            'Water or shovel to fully extinguish the fire',
+                        ]
+                    },
+                    {
+                        name: 'Light & Power',
+                        icon: '🔦',
+                        items: [
+                            'Headlamp or flashlight (+ extra batteries)',
+                            'Lantern',
+                            'Portable phone charger / power bank',
+                        ]
+                    },
+                    {
+                        name: 'Clothing',
+                        icon: '👕',
+                        items: [
+                            'Weather-appropriate layers',
+                            'Rain jacket',
+                            'Comfortable closed-toe shoes',
+                            'Sleepwear',
+                            'Extra socks & underwear',
+                            'Swimsuit (if near water)',
+                        ]
+                    },
+                    {
+                        name: 'Hygiene & Health',
+                        icon: '🧼',
+                        items: [
+                            'Toothbrush & toothpaste',
+                            'Biodegradable soap',
+                            'Hand sanitizer & wet wipes',
+                            'Toilet paper (pack it in a ziplock)',
+                            'Quick-dry towel',
+                            'First aid kit',
+                            'Personal medications',
+                            'Sunscreen',
+                            'Bug spray',
+                        ]
+                    },
+                    {
+                        name: 'Navigation & Safety',
+                        icon: '🧭',
+                        items: [
+                            'Map or offline maps downloaded',
+                            'Multi-tool or knife',
+                            'Whistle',
+                            'Emergency contact list',
+                            'Duct tape / basic repair kit',
+                        ]
+                    },
+                    {
+                        name: 'Camp Comfort',
+                        icon: '🪑',
+                        items: [
+                            'Folding chairs',
+                            'Camp table',
+                            'Tarp for shade or rain cover',
+                            'Rope or paracord',
+                        ]
+                    },
+                ]
             },
             {
-                title: 'Staying Warm at Night',
-                content: `
-                    <p><strong>Key Tips:</strong></p>
-                    <ul>
-                        <li>Wear <strong>dry clothing</strong> to bed — moisture kills warmth.</li>
-                        <li>Use <strong>layers</strong> in your sleeping bag — insulation traps heat.</li>
-                        <li>Keep a <strong>hot drink</strong> near your sleeping bag before bed for core warmth.</li>
-                        <li>Eat a <strong>light snack</strong> before sleep — digestion generates warmth.</li>
-                        <li>Never use a <strong>camp stove or lantern</strong> inside a tent — carbon monoxide risk!</li>
-                        <li>If cold, <strong>exercise gently</strong> (jumping jacks) to warm up, then return to your tent.</li>
-                    </ul>
-                `
+                id: 'kids',
+                groups: [
+                    {
+                        name: 'Kids',
+                        wide: true,
+                        items: [
+                            "Kid-sized sleeping bag & pillow",
+                            'Extra full outfit changes (more than you think)',
+                            'Comfort item (stuffed animal, blanket)',
+                            'Diapers, wipes & changing pad',
+                            'Portable potty or potty seat',
+                            'Kid-safe sunscreen & bug spray',
+                            'Nightlight or glow sticks',
+                            'Baby carrier or stroller',
+                            'Life jacket (if near water)',
+                            'Snacks they actually like',
+                            'Travel games, books & coloring supplies',
+                            'Baby monitor (if sleeping apart)',
+                            "Kids' medications (fever reducer, allergy relief)",
+                            'Baby food, formula & bottles',
+                        ]
+                    }
+                ]
             },
             {
-                title: 'Campfire 101',
-                content: `
-                    <ol>
-                        <li><strong>Clear the Fire Ring:</strong> Remove leaves, pine needles, overhanging branches. Keep a 10-foot radius clear.</li>
-                        <li><strong>Gather Firewood:</strong> Collect tinder (dry leaves), kindling (small twigs), and fuel wood (logs). Never use dead trees still standing.</li>
-                        <li><strong>Build Your Fire:</strong> Start with tinder in the center, add kindling in a tepee shape, light it, then slowly add larger logs.</li>
-                        <li><strong>Maintain the Fire:</strong> Keep it contained in the ring. Never leave it unattended. Keep water nearby.</li>
-                        <li><strong>Extinguish Properly:</strong> Drown with water, stir ashes, drown again. Test with your hand — it should be cool to touch before bed.</li>
-                    </ol>
-                `
+                id: 'cold-weather',
+                groups: [
+                    {
+                        name: 'Cold Weather',
+                        wide: true,
+                        items: [
+                            'Cold-rated sleeping bag (check the temperature rating)',
+                            'Sleeping bag liner for extra warmth',
+                            'Insulated sleeping pad (high R-value)',
+                            'Thermal base layers (top & bottom)',
+                            'Insulated jacket',
+                            'Warm hat & gloves',
+                            'Wool socks (pack extra)',
+                            'Hand & toe warmers',
+                            'Hot water bottle for your sleeping bag',
+                            'Extra tarp to block wind',
+                            'Hot drinks or instant soup mix',
+                        ]
+                    }
+                ]
             },
             {
-                title: 'Comfort Station Tips',
-                content: `
-                    <p><strong>Using Facilities:</strong></p>
-                    <ul>
-                        <li><strong>Showers:</strong> Bring shower shoes, a towel, and toiletries. Showers are hot and often limited.</li>
-                        <li><strong>Toilets:</strong> Flush toilets available 24/7. Bring hand sanitizer and wet wipes.</li>
-                        <li><strong>Laundry:</strong> Washing machines available. Bring quarters and detergent.</li>
-                        <li><strong>Water:</strong> Tap water is safe to drink. Fill up water bottles regularly.</li>
-                        <li><strong>Courtesy:</strong> Keep facilities clean. Report any issues to park staff immediately.</li>
-                    </ul>
-                `
-            }
+                id: 'hot-weather',
+                groups: [
+                    {
+                        name: 'Hot Weather',
+                        wide: true,
+                        items: [
+                            'High-SPF sunscreen (and reapply)',
+                            'Wide-brim hat',
+                            'Sunglasses',
+                            'Lightweight, breathable clothing',
+                            'Extra water — more than you think you need',
+                            'Electrolyte packets or sports drink mix',
+                            'Cooling towel',
+                            'Shade canopy or pop-up gazebo',
+                            'Portable fan',
+                            'Extra insect repellent',
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'other',
+                groups: [
+                    {
+                        name: 'Nice-to-Haves',
+                        wide: true,
+                        items: [
+                            'Board games or cards',
+                            'Portable Bluetooth speaker',
+                            'Hammock',
+                            'Binoculars',
+                            'Fishing gear',
+                            'Camera',
+                            'Book or journal',
+                            'Sports gear (frisbee, football, badminton)',
+                            'Extra rope or paracord',
+                            'Pet supplies (leash, bowl, food, waste bags)',
+                        ]
+                    }
+                ]
+            },
         ];
 
         // ============================================
-        // STATE & DOM
+        // STATE (persisted to localStorage only — private to this browser)
         // ============================================
-        let currentUser = localStorage.getItem('campingUser') || '';
-        let firebaseReady = false;
-        let currentRoles = {};
-        let currentChecklist = {};
-        let currentCommunal = {};
-        let currentComments = [];
-        let currentMealItems = {};
+        const STORAGE_KEY = 'campingChecklistState';
 
-        const mealSlots = [
-            { id: 'saturday-afternoon', label: 'Saturday Afternoon' },
-            { id: 'saturday-evening',   label: 'Saturday Evening' },
-            { id: 'saturday-night',     label: 'Saturday Night' },
-            { id: 'sunday-morning',     label: 'Sunday Morning' },
-            { id: 'sunday-lunch',       label: 'Sunday Lunch' },
-            { id: 'snacks',             label: 'Snacks' },
-        ];
-
-        // ============================================
-        // NAME PICKER
-        // ============================================
-        const namePicker = document.getElementById('namePicker');
-        namePicker.value = currentUser;
-
-        namePicker.addEventListener('change', async (e) => {
-            currentUser = e.target.value;
-            localStorage.setItem('campingUser', currentUser);
-            renderSummary();
-        });
-
-        // ============================================
-        // MEAL PLAN
-        // ============================================
-        function renderMeals() {
-            const container = document.getElementById('mealsContainer');
-            container.innerHTML = '';
-
-            mealSlots.forEach(slot => {
-                const items = currentMealItems[slot.id] || [];
-                const card = document.createElement('div');
-                card.className = 'meal-card';
-
-                const itemsHTML = items.length === 0
-                    ? `<li class="meal-empty">Nothing added yet — be the first!</li>`
-                    : items.map(item => `
-                        <li class="meal-item-row">
-                            <span>${item.text}</span>
-                            ${item.addedBy === currentUser
-                                ? `<button class="meal-remove-btn" data-doc-id="${item.id}" title="Remove">×</button>`
-                                : `<span style="font-size:0.78rem;color:#aaa;padding-right:0.3rem">${item.addedBy}</span>`
-                            }
-                        </li>`).join('');
-
-                card.innerHTML = `
-                    <div class="meal-time">${slot.label}</div>
-                    <ul class="meal-items">${itemsHTML}</ul>
-                    <div class="meal-add-row">
-                        <input class="meal-input" type="text" placeholder="Add an item..." data-meal-id="${slot.id}">
-                        <button class="meal-add-btn" data-meal-id="${slot.id}">Add</button>
-                    </div>
-                `;
-
-                container.appendChild(card);
-            });
-
-            container.querySelectorAll('.meal-add-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const mealId = btn.dataset.mealId;
-                    const input = container.querySelector(`.meal-input[data-meal-id="${mealId}"]`);
-                    const text = input.value.trim();
-                    if (text) { addMealItem(mealId, text); input.value = ''; }
-                });
-            });
-
-            container.querySelectorAll('.meal-input').forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        const text = input.value.trim();
-                        if (text) { addMealItem(input.dataset.mealId, text); input.value = ''; }
-                    }
-                });
-            });
-
-            container.querySelectorAll('.meal-remove-btn').forEach(btn => {
-                btn.addEventListener('click', () => removeMealItem(btn.dataset.docId));
-            });
-        }
-
-        async function addMealItem(mealId, text) {
-            if (!currentUser) { alert('Please select your name first!'); return; }
-            if (!firebaseReady) return;
+        function loadState() {
             try {
-                await db.collection('meal_items').add({
-                    mealId,
-                    text,
-                    addedBy: currentUser,
-                    timestamp: new Date()
-                });
-            } catch (error) {
-                console.error('Error adding meal item:', error);
+                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch {
+                return {};
             }
         }
 
-        async function removeMealItem(docId) {
-            if (!firebaseReady) return;
-            try {
-                await db.collection('meal_items').doc(docId).delete();
-            } catch (error) {
-                console.error('Error removing meal item:', error);
-            }
+        function saveState(state) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         }
 
-        async function loadMealItems() {
-            if (!firebaseReady) return;
-            try {
-                const snapshot = await db.collection('meal_items').orderBy('timestamp', 'asc').get();
-                currentMealItems = {};
-                snapshot.forEach(doc => {
-                    const d = doc.data();
-                    if (!currentMealItems[d.mealId]) currentMealItems[d.mealId] = [];
-                    currentMealItems[d.mealId].push({ id: doc.id, text: d.text, addedBy: d.addedBy });
-                });
-                renderMeals();
-                renderSummary();
-            } catch (error) {
-                console.error('Error loading meal items:', error);
-                renderMeals();
-            }
+        let checklistState = loadState();
+
+        function slugify(str) {
+            return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
         }
 
         // ============================================
-        // ROLES
+        // RENDER
         // ============================================
-        function renderRoles() {
-            const container = document.getElementById('rolesContainer');
-            container.innerHTML = '';
+        function renderSections() {
+            sections.forEach(section => {
+                const container = document.querySelector(`[data-section-container="${section.id}"]`);
+                if (!container) return;
+                container.innerHTML = '';
 
-            roles.forEach(role => {
-                const claimants = currentRoles[role.id] || [];
-                const isMine = claimants.includes(currentUser);
-                const isFull = claimants.length >= 3;
-                const card = document.createElement('div');
-                card.className = 'role-card';
+                section.groups.forEach(group => {
+                    const card = document.createElement('div');
+                    card.className = 'checklist-card' + (group.wide ? ' wide' : '');
 
-                const pillsHTML = claimants.length > 0
-                    ? `<div class="role-claimants">${claimants.map(n => `<span class="role-claim-pill">✓ ${n}</span>`).join('')}</div>`
-                    : '';
+                    const headerIcon = group.icon ? `${group.icon} ` : '';
+                    const showHeader = !group.wide;
 
-                const slotsLeft = 3 - claimants.length;
-                const slotsHTML = `<div class="role-slots">${claimants.length}/3 claimed${slotsLeft > 0 ? ` · ${slotsLeft} spot${slotsLeft > 1 ? 's' : ''} open` : ''}</div>`;
+                    const itemsHTML = group.items.map(item => {
+                        const id = `${section.id}__${slugify(group.name)}__${slugify(item)}`;
+                        const checked = !!checklistState[id];
+                        return `
+                            <label class="check-item${checked ? ' checked' : ''}" data-item-wrapper="${id}">
+                                <input type="checkbox" data-id="${id}" ${checked ? 'checked' : ''}>
+                                <span>${item}</span>
+                            </label>`;
+                    }).join('');
 
-                let btnLabel, btnDisabled, btnClass;
-                if (isMine) {
-                    btnLabel = 'Unclaim'; btnDisabled = false; btnClass = 'claim-button unclaim';
-                } else if (isFull) {
-                    btnLabel = 'Full (3/3)'; btnDisabled = true; btnClass = 'claim-button';
-                } else {
-                    btnLabel = 'Claim This Role'; btnDisabled = false; btnClass = 'claim-button';
-                }
-
-                card.innerHTML = `
-                    <div class="role-name">${role.name}</div>
-                    <div class="role-description">${role.description}</div>
-                    ${pillsHTML}
-                    ${slotsHTML}
-                    <button class="${btnClass}" data-role-id="${role.id}" data-unclaim="${isMine}" ${btnDisabled ? 'disabled' : ''}>
-                        ${btnLabel}
-                    </button>
-                `;
-
-                container.appendChild(card);
-            });
-
-            document.querySelectorAll('.claim-button').forEach(btn => {
-                btn.addEventListener('click', claimRole);
-            });
-        }
-
-        async function claimRole(e) {
-            if (!currentUser) {
-                alert('Please select your name first!');
-                return;
-            }
-
-            const roleId = e.target.dataset.roleId;
-            const isUnclaim = e.target.dataset.unclaim === 'true';
-            if (!firebaseReady) {
-                alert('Firebase is not ready. Please check your config.');
-                return;
-            }
-
-            try {
-                const ref = db.collection('roles').doc(roleId);
-                if (isUnclaim) {
-                    await ref.update({ claimedBy: firebase.firestore.FieldValue.arrayRemove(currentUser) });
-                } else {
-                    await ref.set({ claimedBy: firebase.firestore.FieldValue.arrayUnion(currentUser) }, { merge: true });
-                }
-                loadRoles();
-            } catch (error) {
-                console.error('Error updating role:', error);
-                alert('Error updating role. Check console.');
-            }
-        }
-
-        async function loadRoles() {
-            if (!firebaseReady) return;
-            try {
-                const snapshot = await db.collection('roles').get();
-                currentRoles = {};
-                snapshot.forEach(doc => {
-                    const raw = doc.data().claimedBy;
-                    // handle legacy string values
-                    currentRoles[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
-                });
-                renderRoles();
-                renderSummary();
-            } catch (error) {
-                console.error('Error loading roles:', error);
-            }
-        }
-
-        // ============================================
-        // CHECKLIST
-        // ============================================
-        function communalKey(cat, item) {
-            return (cat + '-' + item).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        }
-
-        function renderChecklist() {
-            const container = document.getElementById('checklistContainer');
-            container.innerHTML = '';
-
-            // ── Section 1: Per Tent ──
-            const tentHeader = document.createElement('div');
-            tentHeader.className = 'checklist-section-header';
-            tentHeader.innerHTML = `<div class="checklist-section-title">⛺ Per Tent</div><div class="checklist-section-desc">Each tent checks off its own gear. 3 tents total.</div>`;
-            container.appendChild(tentHeader);
-
-            const tentGrid = document.createElement('div');
-            tentGrid.className = 'tent-grid';
-
-            tents.forEach(tent => {
-                const card = document.createElement('div');
-                card.className = 'tent-card';
-                card.innerHTML = `<div class="tent-card-header">${tent.label} <span style="font-weight:400;opacity:0.8;font-size:0.82rem">· ${tent.leader}</span></div>`;
-
-                let currentSub = null;
-                tentChecklistItems.forEach(item => {
-                    if (item.sub !== currentSub) {
-                        currentSub = item.sub;
-                        const subEl = document.createElement('div');
-                        subEl.className = 'tent-subcategory';
-                        subEl.textContent = item.sub;
-                        card.appendChild(subEl);
-                    }
-                    const itemKey = `${tent.id}|${item.key}`;
-                    const data = currentChecklist[itemKey] || {};
-                    const isChecked = data.checked || false;
-                    const checkedBy = data.checkedBy || '';
-                    const timestamp = data.timestamp || '';
-
-                    const row = document.createElement('div');
-                    row.className = `tent-item${isChecked ? ' checked' : ''}`;
-
-                    let infoHTML = '';
-                    if (isChecked && checkedBy) {
-                        const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                        infoHTML = `<span class="tent-item-info">✓ ${checkedBy} — ${time}</span>`;
-                    }
-
-                    row.innerHTML = `
-                        <input type="checkbox" ${isChecked ? 'checked' : ''} data-item-key="${itemKey}">
-                        <div class="tent-item-content">
-                            <label class="tent-item-label">${item.label}</label>
-                            ${infoHTML}
-                        </div>
+                    card.innerHTML = `
+                        ${showHeader ? `<div class="checklist-card-header"><span>${headerIcon}${group.name}</span><span class="checklist-card-count" data-group-badge="${section.id}__${slugify(group.name)}">0/${group.items.length}</span></div>` : ''}
+                        <div class="check-list">${itemsHTML}</div>
                     `;
-                    card.appendChild(row);
+                    container.appendChild(card);
                 });
-                tentGrid.appendChild(card);
             });
-            container.appendChild(tentGrid);
 
-            // ── Section 2: Communal ──
-            const communalHeader = document.createElement('div');
-            communalHeader.className = 'checklist-section-header';
-            communalHeader.innerHTML = `<div class="checklist-section-title">🤝 Communal Items</div><div class="checklist-section-desc">Up to 3 people can claim "I'm bringing this." Click again to unclaim.</div>`;
-            container.appendChild(communalHeader);
+            container_bindEvents();
+            updateAllCounts();
+        }
 
-            Object.entries(communalChecklistItems).forEach(([cat, items]) => {
-                const group = document.createElement('div');
-                group.className = 'communal-group';
-                group.innerHTML = `<div class="communal-group-title">${cat}</div>`;
-                const list = document.createElement('div');
-                list.className = 'communal-items-list';
-
-                items.forEach(item => {
-                    const docId = communalKey(cat, item);
-                    const claimants = currentCommunal[docId] || [];
-                    const isMine = claimants.includes(currentUser);
-                    const isFull = claimants.length >= 3;
-
-                    const pillsHTML = claimants.map(n => `<span class="communal-claim-pill">${n}</span>`).join('');
-
-                    let btnLabel, btnClass, btnDisabled;
-                    if (isMine)       { btnLabel = 'Unclaim'; btnClass = 'communal-btn unclaim'; btnDisabled = false; }
-                    else if (isFull)  { btnLabel = 'Full';    btnClass = 'communal-btn';         btnDisabled = true; }
-                    else              { btnLabel = 'Bring It';btnClass = 'communal-btn';         btnDisabled = false; }
-
-                    const row = document.createElement('div');
-                    row.className = 'communal-item';
-                    row.innerHTML = `
-                        <div class="communal-item-left">
-                            <span class="communal-item-name">${item}</span>
-                            <div class="communal-claimants">${pillsHTML}</div>
-                        </div>
-                        <button class="${btnClass}" data-doc-id="${docId}" data-cat="${cat}" data-item="${item}" data-unclaim="${isMine}" ${btnDisabled ? 'disabled' : ''}>${btnLabel}</button>
-                    `;
-                    list.appendChild(row);
+        function container_bindEvents() {
+            document.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const id = e.target.dataset.id;
+                    checklistState[id] = e.target.checked;
+                    saveState(checklistState);
+                    e.target.closest('.check-item').classList.toggle('checked', e.target.checked);
+                    updateAllCounts();
                 });
-                group.appendChild(list);
-                container.appendChild(group);
-            });
-
-            // ── Section 3: Personal ──
-            const personalHeader = document.createElement('div');
-            personalHeader.className = 'checklist-section-header';
-            personalHeader.innerHTML = `<div class="checklist-section-title">🎒 Personal Items</div><div class="checklist-section-desc">Everyone is responsible for their own. Use this as a packing reference.</div>`;
-            container.appendChild(personalHeader);
-
-            const priorityClasses = { 'Must Have': 'must-have', 'Toiletries': 'toiletries', 'Nice to Have': 'nice-to-have' };
-            Object.entries(personalChecklistItems).forEach(([priority, items]) => {
-                const group = document.createElement('div');
-                group.className = 'personal-group';
-                const cls = priorityClasses[priority] || 'must-have';
-                group.innerHTML = `<span class="personal-priority-badge ${cls}">${priority}</span>
-                    <div class="personal-tags">${items.map(i => `<span class="personal-tag">${i}</span>`).join('')}</div>`;
-                container.appendChild(group);
-            });
-
-            // Attach listeners
-            container.querySelectorAll('.tent-item input[type="checkbox"]').forEach(cb => {
-                cb.addEventListener('change', toggleChecklistItem);
-            });
-            container.querySelectorAll('.communal-btn:not(:disabled)').forEach(btn => {
-                btn.addEventListener('click', toggleCommunalItem);
             });
         }
 
-        async function toggleChecklistItem(e) {
-            if (!currentUser) {
-                alert('Please select your name first!');
-                e.target.checked = !e.target.checked;
-                return;
-            }
-            const itemKey = e.target.dataset.itemKey;
-            const isChecked = e.target.checked;
-            if (!firebaseReady) { e.target.checked = !e.target.checked; return; }
-            try {
-                const docId = itemKey.replace(/\|/g, '_');
-                await db.collection('checklist').doc(docId).set({
-                    itemKey,
-                    checked: isChecked,
-                    checkedBy: isChecked ? currentUser : '',
-                    timestamp: isChecked ? new Date() : null
-                });
-            } catch (error) {
-                console.error('Error updating checklist:', error);
-                e.target.checked = !e.target.checked;
-            }
-        }
+        function updateAllCounts() {
+            let grandChecked = 0;
+            let grandTotal = 0;
 
-        async function toggleCommunalItem(e) {
-            if (!currentUser) { alert('Please select your name first!'); return; }
-            if (!firebaseReady) return;
-            const { docId, cat, item, unclaim } = e.target.dataset;
-            const isUnclaim = unclaim === 'true';
-            try {
-                const ref = db.collection('communal').doc(docId);
-                if (isUnclaim) {
-                    await ref.update({ claimedBy: firebase.firestore.FieldValue.arrayRemove(currentUser) });
-                } else {
-                    await ref.set({ item, category: cat, claimedBy: firebase.firestore.FieldValue.arrayUnion(currentUser) }, { merge: true });
-                }
-            } catch (error) {
-                console.error('Error updating communal item:', error);
-            }
-        }
+            sections.forEach(section => {
+                let sectionChecked = 0;
+                let sectionTotal = 0;
 
-        async function loadChecklist() {
-            if (!firebaseReady) return;
-            try {
-                const snapshot = await db.collection('checklist').get();
-                currentChecklist = {};
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    currentChecklist[data.itemKey] = {
-                        checked: data.checked,
-                        checkedBy: data.checkedBy,
-                        timestamp: data.timestamp?.toDate?.() || null
-                    };
-                });
-                renderChecklist();
-            } catch (error) {
-                console.error('Error loading checklist:', error);
-            }
-        }
+                section.groups.forEach(group => {
+                    const groupChecked = group.items.filter(item => {
+                        const id = `${section.id}__${slugify(group.name)}__${slugify(item)}`;
+                        return !!checklistState[id];
+                    }).length;
+                    const groupTotal = group.items.length;
 
-        async function loadCommunal() {
-            if (!firebaseReady) return;
-            try {
-                const snapshot = await db.collection('communal').get();
-                currentCommunal = {};
-                snapshot.forEach(doc => {
-                    const raw = doc.data().claimedBy;
-                    currentCommunal[doc.id] = Array.isArray(raw) ? raw : (raw ? [raw] : []);
-                });
-                renderChecklist();
-                renderSummary();
-            } catch (error) {
-                console.error('Error loading communal items:', error);
-            }
-        }
+                    const groupBadge = document.querySelector(`[data-group-badge="${section.id}__${slugify(group.name)}"]`);
+                    if (groupBadge) groupBadge.textContent = `${groupChecked}/${groupTotal}`;
 
-        // ============================================
-        // WHO'S BRINGING WHAT
-        // ============================================
-        function renderSummary() {
-            const grid = document.getElementById('summaryGrid');
-            if (!grid) return;
-
-            const allPeople = ['Danial', 'Izza', 'Saif', 'Sania', 'Mohid', 'Nida', 'Eshal', 'Iman', 'Alina'];
-
-            const cards = allPeople.map(person => {
-                const isMe = person === currentUser;
-
-                // Roles this person has claimed
-                const personRoles = roles.filter(r => (currentRoles[r.id] || []).includes(person));
-
-                // Communal gear they're bringing
-                const personGear = [];
-                Object.entries(communalChecklistItems).forEach(([cat, items]) => {
-                    items.forEach(item => {
-                        if ((currentCommunal[communalKey(cat, item)] || []).includes(person)) {
-                            personGear.push(item);
-                        }
-                    });
+                    sectionChecked += groupChecked;
+                    sectionTotal += groupTotal;
                 });
 
-                // Meal items they've added
-                const personMeals = [];
-                Object.entries(currentMealItems).forEach(([mealId, items]) => {
-                    items.forEach(mi => {
-                        if (mi.addedBy === person) {
-                            const slot = mealSlots.find(s => s.id === mealId);
-                            personMeals.push(`${mi.text} <span style="opacity:0.65;font-size:0.72rem">(${slot ? slot.label : mealId})</span>`);
-                        }
-                    });
-                });
+                const sectionBadge = document.querySelector(`[data-section-badge="${section.id}"]`);
+                if (sectionBadge) sectionBadge.textContent = `${sectionChecked}/${sectionTotal}`;
 
-                const rolesHTML = personRoles.length
-                    ? personRoles.map(r => `<span class="summary-tag role">${r.name}</span>`).join('')
-                    : '<span class="summary-empty-line">None</span>';
-
-                const gearHTML = personGear.length
-                    ? personGear.map(g => `<span class="summary-tag gear">${g}</span>`).join('')
-                    : '<span class="summary-empty-line">None</span>';
-
-                const mealsHTML = personMeals.length
-                    ? personMeals.map(m => `<span class="summary-tag meal">${m}</span>`).join('')
-                    : '<span class="summary-empty-line">None</span>';
-
-                return `
-                    <div class="summary-card${isMe ? ' is-me' : ''}">
-                        <div class="summary-card-header">
-                            <span>👤 ${person}</span>
-                            ${isMe ? '<span class="summary-you-badge">You</span>' : ''}
-                        </div>
-                        <div class="summary-card-body">
-                            <div class="summary-group-label">🎯 Roles (${personRoles.length})</div>
-                            <div class="summary-tags">${rolesHTML}</div>
-                            <div class="summary-group-label">🎒 Bringing (${personGear.length} items)</div>
-                            <div class="summary-tags">${gearHTML}</div>
-                            <div class="summary-group-label">🍽️ Meal contributions (${personMeals.length})</div>
-                            <div class="summary-tags">${mealsHTML}</div>
-                        </div>
-                    </div>`;
+                grandChecked += sectionChecked;
+                grandTotal += sectionTotal;
             });
 
-            grid.innerHTML = cards.join('');
+            document.getElementById('progressLabel').textContent = `${grandChecked} of ${grandTotal} items packed`;
+            const pct = grandTotal ? Math.round((grandChecked / grandTotal) * 100) : 0;
+            document.getElementById('progressFill').style.width = `${pct}%`;
         }
 
         // ============================================
-        // COUNTDOWN TIMER
+        // TOOLBAR ACTIONS
         // ============================================
-        function updateCountdown() {
-            const el = document.getElementById('tripCountdown');
-            if (!el) return;
-            const tripDate = new Date('2026-05-16T09:30:00-04:00');
-            const now = new Date();
-            const diff = tripDate - now;
-            if (diff <= 0) {
-                el.textContent = '🔥 We\'re at Bass Lake right now!';
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            el.innerHTML = `⏳ <strong>${days}</strong>d <strong>${hours}</strong>h <strong>${mins}</strong>m until we hit the road!`;
-            setTimeout(updateCountdown, 30000);
-        }
+        document.getElementById('printBtn').addEventListener('click', () => window.print());
 
-
-        // ============================================
-        // COUNTDOWN TIMER
-        // ============================================
-        function updateCountdown() {
-            const el = document.getElementById('tripCountdown');
-            if (!el) return;
-            const tripDate = new Date('2026-05-16T09:30:00-04:00');
-            const now = new Date();
-            const diff = tripDate - now;
-            if (diff <= 0) {
-                el.textContent = '🔥 We\'re at Bass Lake right now!';
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            el.innerHTML = `⏳ <strong>${days}</strong>d <strong>${hours}</strong>h <strong>${mins}</strong>m until we hit the road!`;
-            setTimeout(updateCountdown, 30000);
-        }
-
-        // ============================================
-        // ACCORDION
-        // ============================================
-        function renderAccordion() {
-            const container = document.getElementById('accordionContainer');
-            container.innerHTML = '';
-
-            guides.forEach((guide, index) => {
-                const item = document.createElement('div');
-                item.className = 'accordion-item';
-
-                const header = document.createElement('div');
-                header.className = 'accordion-header';
-                header.innerHTML = `
-                    ${guide.title}
-                    <span class="accordion-toggle">▼</span>
-                `;
-
-                const content = document.createElement('div');
-                content.className = 'accordion-content';
-                content.innerHTML = guide.content;
-
-                header.addEventListener('click', () => {
-                    header.classList.toggle('active');
-                    content.classList.toggle('active');
-                });
-
-                item.appendChild(header);
-                item.appendChild(content);
-                container.appendChild(item);
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (!confirm('Reset your checklist? This will uncheck every item.')) return;
+            checklistState = {};
+            saveState(checklistState);
+            document.querySelectorAll('.check-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+                cb.closest('.check-item').classList.remove('checked');
             });
-        }
-
-        // ============================================
-        // COMMENTS / CHAT
-        // ============================================
-        function renderComments() {
-            const container = document.getElementById('commentsList');
-            container.innerHTML = '';
-
-            if (currentComments.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-light); text-align: center;">No messages yet. Be the first to share!</p>';
-                return;
-            }
-
-            currentComments.forEach(comment => {
-                const div = document.createElement('div');
-                div.className = 'comment';
-
-                const time = new Date(comment.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-                div.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-name">${comment.name}</div>
-                        <div class="comment-timestamp">${time}</div>
-                    </div>
-                    <div class="comment-text">${escapeHtml(comment.message)}</div>
-                `;
-
-                container.appendChild(div);
-            });
-
-            // Scroll to latest
-            setTimeout(() => {
-                container.scrollTop = container.scrollHeight;
-            }, 100);
-        }
-
-        async function postComment() {
-            if (!currentUser) {
-                alert('Please select your name first!');
-                return;
-            }
-
-            const input = document.getElementById('commentInput');
-            const message = input.value.trim();
-
-            if (!message) {
-                alert('Please type a message!');
-                return;
-            }
-
-            if (!firebaseReady) {
-                alert('Firebase is not ready.');
-                return;
-            }
-
-            try {
-                await db.collection('comments').add({
-                    name: currentUser,
-                    message: message,
-                    timestamp: new Date()
-                });
-                input.value = '';
-                loadComments();
-            } catch (error) {
-                console.error('Error posting comment:', error);
-                alert('Error posting comment. Check console.');
-            }
-        }
-
-        async function loadComments() {
-            if (!firebaseReady) return;
-            try {
-                const snapshot = await db.collection('comments')
-                    .orderBy('timestamp', 'asc')
-                    .limit(50)
-                    .get();
-                currentComments = [];
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    currentComments.push({
-                        id: doc.id,
-                        name: data.name,
-                        message: data.message,
-                        timestamp: data.timestamp?.toDate?.() || new Date()
-                    });
-                });
-                renderComments();
-            } catch (error) {
-                console.error('Error loading comments:', error);
-            }
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ============================================
-        // POST COMMENT BUTTON
-        // ============================================
-        document.getElementById('postComment').addEventListener('click', postComment);
-        document.getElementById('commentInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') postComment();
+            updateAllCounts();
         });
-
-        // ============================================
-        // FIREBASE LISTENER
-        // ============================================
-        function initializeFirebase() {
-            try {
-                // Test connection
-                db.collection('roles').limit(1).get().then(() => {
-                    firebaseReady = true;
-                    console.log('Firebase connected!');
-
-                    // Load data
-                    loadRoles();
-                    loadMealItems();
-                    loadChecklist();
-                    loadCommunal();
-                    loadComments();
-
-                    // Real-time listeners
-                    db.collection('roles').onSnapshot(() => { loadRoles(); });
-                    db.collection('meal_items').onSnapshot(() => { loadMealItems(); });
-                    db.collection('checklist').onSnapshot(() => { loadChecklist(); });
-                    db.collection('communal').onSnapshot(() => { loadCommunal(); });
-                    db.collection('comments').orderBy('timestamp', 'asc').onSnapshot(() => { loadComments(); });
-                }).catch((error) => {
-                    console.error('Firebase error:', error);
-                    console.warn('Using offline mode. Data will not persist.');
-                    firebaseReady = false;
-                    renderMeals();
-                    renderRoles();
-                    renderChecklist();
-                    renderAccordion();
-                    renderComments();
-                });
-            } catch (error) {
-                console.error('Firebase initialization error:', error);
-                console.warn('Using offline mode.');
-                firebaseReady = false;
-                renderRoles();
-                renderChecklist();
-                renderAccordion();
-                renderComments();
-            }
-        }
 
         // ============================================
         // INIT
         // ============================================
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCountdown();
-            renderAccordion();
-            initializeFirebase();
-
-            // Fallback: render without firebase after 3 seconds
-            setTimeout(() => {
-                if (!firebaseReady) {
-                    renderRoles();
-                    renderChecklist();
-                }
-            }, 3000);
-        });
+        document.addEventListener('DOMContentLoaded', renderSections);
     </script>
 </body>
 </html>
